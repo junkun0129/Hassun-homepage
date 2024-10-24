@@ -1,7 +1,13 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: "potta"; /* フォントファミリーの名前を指定 */
+  src: url("./PottaOne-Regular.ttf") format("truetype"); /* フォントファイルへのパスを指定 */
+  /* 他のスタイル設定（オプション） */
+}
 * {
   padding: 0%;
   margin: 0%;
+  font-family: "potta";
 }
