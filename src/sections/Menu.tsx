@@ -4,7 +4,6 @@ import {
   useMotionValueEvent,
   useTransform,
 } from "framer-motion";
-import React from "react";
 import Menu1SVG from "../components/svg/Menu1SVG";
 import Menu2SVG from "../components/svg/Menu2SVG";
 import Menu3SVG from "../components/svg/Menu3SVG";
@@ -12,12 +11,18 @@ type Props = {
   scrollYProgress: MotionValue<number>;
 };
 const Menu = ({ scrollYProgress }: Props) => {
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 1], [0, 1, 0]);
+  // const opacity = useTransform(scrollYProgress, [1, 0.1, 0], [1, 1, 0]);
+
+  const y = useTransform(
+    scrollYProgress,
+    [0, 1 / 3.1, 2 / 3],
+    [-2000, 0, -2000]
+  );
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+    console.log("MENUUUU: ", latest);
+  });
   return (
-    <motion.div
-      style={{ opacity, color: "#FFA82F" }}
-      className=" bg-black w-full h-full flex"
-    >
+    <motion.div style={{ color: "#FFA82F", y }} className=" w-full h-full flex">
       <div className="relative w-[60%]">
         <div className="absolute top-24 left-5 w-[90%]">
           <Label label="今週のHassun" price="（税込み２２００円）" />

@@ -1,14 +1,17 @@
 import { motion, MotionValue, useTransform } from "framer-motion";
-import React from "react";
 import InfoContainerSVG from "../components/svg/InfoContainerSVG";
 type Props = {
   scrollYProgress: MotionValue<number>;
 };
 const Concept = ({ scrollYProgress }: Props) => {
-  const opacity = useTransform(scrollYProgress, [0, 0.1, 1], [0, 1, 0]);
+  const y = useTransform(
+    scrollYProgress,
+    [0, 2 / 3.1, 3 / 3],
+    [-2000, 0, -2000]
+  );
   return (
     <motion.div
-      style={{ opacity, color: "#FFA82F", backgroundColor: "#FFA82F" }}
+      style={{ color: "#FFA82F", y }}
       className="w-full h-full flex items-center justify-center"
     >
       <div className="w-[93%] h-[100%]  relative">

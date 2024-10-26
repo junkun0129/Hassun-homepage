@@ -1,25 +1,25 @@
-const InfoContainerSVG = () => {
+const Info2SVG = () => {
   return (
     <svg
-      width={"100%"}
-      height={"100%"}
-      viewBox="0 0 1369 525"
+      width="748"
+      height="467"
+      viewBox="0 0 748 467"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <g filter="url(#filter0_i_2990_16149)">
+      <g filter="url(#filter0_i_3030_16075)">
         <path
-          d="M40.2062 487.505C40.5815 435.806 -72.9814 41.4415 82.2056 25.5046C281.705 90.0045 746.705 -55.9941 1356.71 25.5047C1356.33 77.2033 1416.71 434.006 1270.21 455.505C1111.99 454.357 13.0218 586.922 40.2062 487.505Z"
+          d="M33.451 466.688C34.9246 420.221 -43.4454 38.3111 35.0071 25.4475C133.749 85.3045 410.205 -53.5567 714.999 25.4471C713.525 71.9145 789.221 448.743 715 466.689C650.995 404.521 172.296 436.681 33.451 466.688Z"
           fill="#33806C"
         />
       </g>
       <defs>
         <filter
-          id="filter0_i_2990_16149"
-          x="0.476562"
-          y="0.0449219"
-          width="1368.24"
-          height="528.455"
+          id="filter0_i_3030_16075"
+          x="0.0625"
+          y="0.4375"
+          width="747.6"
+          height="470.252"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -46,7 +46,7 @@ const InfoContainerSVG = () => {
           <feBlend
             mode="normal"
             in2="shape"
-            result="effect1_innerShadow_2990_16149"
+            result="effect1_innerShadow_3030_16075"
           />
         </filter>
       </defs>
@@ -54,4 +54,4 @@ const InfoContainerSVG = () => {
   );
 };
 
-export default InfoContainerSVG;
+export default Info2SVG;
