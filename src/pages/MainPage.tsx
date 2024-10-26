@@ -9,7 +9,7 @@ type Props = {
   onScrollYChange: (s: number) => void;
 };
 const MainPage = ({ onScrollYChange }: Props) => {
-  const [height, setheight] = useState(700);
+  const [height] = useState(700);
 
   const globalRef = useRef<HTMLDivElement>(null);
 
@@ -57,7 +57,7 @@ const MainPage = ({ onScrollYChange }: Props) => {
       {/* スクロール用レイヤー */}
       {Array(4)
         .fill("")
-        .map((item, i) => {
+        .map((_, i) => {
           return (
             <motion.div
               key={i}
