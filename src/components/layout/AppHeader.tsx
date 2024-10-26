@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { appStyle } from "../../constants/common";
 import HeaderSVG from "../svg/HeaderSVG";
 import { motion } from "framer-motion";
+import { useSearchParams } from "react-router-dom";
 type Props = {
   scrollYProgress: number;
 };
@@ -9,7 +10,7 @@ const AppHeader = ({ scrollYProgress }: Props) => {
   const items = ["menu", "drinks", "concept", "access"];
   const refs = items.map(() => useRef<any>(null));
   const [activeNum, setactiveNum] = useState(0);
-
+  const [_, setSearchParams] = useSearchParams();
   const [activeposition, setactiveposition] = useState<{
     x: number;
     y: number;
@@ -17,6 +18,7 @@ const AppHeader = ({ scrollYProgress }: Props) => {
 
   useEffect(() => {
     const newactiveNum = Math.floor(scrollYProgress * 4);
+    if (activeNum === newactiveNum) return;
     setactiveNum(newactiveNum);
   }, [scrollYProgress]);
 
@@ -29,6 +31,9 @@ const AppHeader = ({ scrollYProgress }: Props) => {
     if (!rects || !rects.length) return;
     const rect = rects[0];
     setactiveposition({ x: rect.x, y: rect.y });
+    console.log("object");
+    //parasm
+    setSearchParams({ ["tab"]: activeNum.toString() });
   }, [activeNum]);
 
   return (

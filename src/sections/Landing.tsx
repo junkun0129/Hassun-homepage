@@ -12,11 +12,14 @@ const Landing = ({ scrollYProgress }: Props) => {
     <motion.div className="flex w-full h-full justify-center items-center relative">
       <motion.div
         style={{ y }}
-        className=" relative flex items-center justify-center"
+        className=" relative w-full h-full flex items-center justify-center"
       >
-        <div className=" absolute">
+        <motion.div
+          whileHover={{ scale: 1.1 }}
+          className=" absolute w-[60%] h-[70%]"
+        >
           <HassunMainBack />
-        </div>
+        </motion.div>
         <div className=" absolute">
           <HassunMainText />
         </div>

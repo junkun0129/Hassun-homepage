@@ -1,28 +1,25 @@
-import { motion } from "framer-motion";
-
-const HassunMainBack = () => {
+const MenuImage2 = () => {
   return (
-    <motion.svg
-      whileHover={{ scale: 1.1 }}
-      width={"100%"}
-      height={"100%"}
-      viewBox="0 0 944 413"
+    <svg
+      width="297"
+      height="178"
+      viewBox="0 0 297 178"
       fill="none"
-      xmlns="http://www.w3.org/2000/motion.svg"
+      xmlns="http://www.w3.org/2000/svg"
     >
-      <g filter="url(#filter0_d_2988_16082)">
+      <g filter="url(#filter0_d_3036_16079)">
         <path
-          d="M832.108 216.987C832.108 298.065 265.653 405 74.6508 405C-116.351 405 140.428 298.065 140.428 216.987C140.428 135.909 671.282 0 862.285 0C1053.29 0 832.108 135.909 832.108 216.987Z"
-          fill="#33806C"
+          d="M275.045 21.3959C305.192 12.4445 290.561 93.8959 275.045 160.791C269.453 184.896 149.563 151.896 20.561 160.792C-2.05037 157.227 -1.79383 0.395874 29.562 0.395533C104.562 0.394718 264.785 8.199 275.045 21.3959Z"
+          fill="white"
         />
       </g>
       <defs>
         <filter
-          id="filter0_d_2988_16082"
-          x="0"
-          y="0"
-          width="944"
-          height="413"
+          id="filter0_d_3036_16079"
+          x="0.673828"
+          y="0.396484"
+          width="295.914"
+          height="177.385"
           filterUnits="userSpaceOnUse"
           color-interpolation-filters="sRGB"
         >
@@ -43,18 +40,18 @@ const HassunMainBack = () => {
           <feBlend
             mode="normal"
             in2="BackgroundImageFix"
-            result="effect1_dropShadow_2988_16082"
+            result="effect1_dropShadow_3036_16079"
           />
           <feBlend
             mode="normal"
             in="SourceGraphic"
-            in2="effect1_dropShadow_2988_16082"
+            in2="effect1_dropShadow_3036_16079"
             result="shape"
           />
         </filter>
       </defs>
-    </motion.svg>
+    </svg>
   );
 };
 
-export default HassunMainBack;
+export default MenuImage2;
