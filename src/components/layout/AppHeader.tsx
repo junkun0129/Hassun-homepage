@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { appStyle } from "../../constants/common";
-import { useNavigate } from "react-router-dom";
 import HeaderSVG from "../svg/HeaderSVG";
 import { motion } from "framer-motion";
 type Props = {
