@@ -1,22 +1,25 @@
 import { motion, useMotionValueEvent, useScroll } from "framer-motion";
-import { ReactNode, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import Landing from "../sections/Landing";
 import Menu from "../sections/Menu";
 import Concept from "../sections/Concept";
 import Info from "../sections/Info";
-import big_plate_image from "/hassun-big-plate.jpg";
+import { useDetailContext } from "../providers/DetailProvider";
+import HassunBackGround from "../components/svg/HassunBackGround";
 type Props = {
   onScrollYChange: (s: number) => void;
 };
 const MainPage = ({ onScrollYChange }: Props) => {
-  const [height] = useState(700);
-
+  const { height, setheight } = useDetailContext();
   const globalRef = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: globalRef,
   });
-
+  useEffect(() => {
+    const newHeight = window.innerHeight;
+    setheight(newHeight);
+  }, []);
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     onScrollYChange(latest);
   });
@@ -27,18 +30,15 @@ const MainPage = ({ onScrollYChange }: Props) => {
     </div>
   );
   return (
-    <div ref={globalRef} className=" relative h-full w-full overflow-y-scrol">
+    <div
+      ref={globalRef}
+      style={{ backgroundColor: "#438372" }}
+      className=" relative h-full w-full overflow-y-scrol"
+    >
       {/* 背景 */}
-      <div
-        style={{
-          backgroundImage: `url(${big_plate_image})`,
-          backgroundPosition: "cover",
-          backgroundSize: "contain",
-          height: `${height}px`,
-        }}
-        className="fixed w-full"
-      ></div>
-      <div className="absolute w-full h-full bg-black opacity-70"></div>
+      <div className="fixed">
+        <HassunBackGround />
+      </div>
 
       {/* 各ページ */}
       <Container>

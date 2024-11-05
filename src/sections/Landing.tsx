@@ -1,5 +1,4 @@
-import HassunMainBack from "../components/svg/HassunMainBack";
-import HassunMainText from "../components/svg/HassunMainText";
+import HassunBall from "../components/svg/HassunBall";
 import { motion, MotionValue, useTransform } from "framer-motion";
 
 type Props = {
@@ -14,14 +13,8 @@ const Landing = ({ scrollYProgress }: Props) => {
         style={{ y }}
         className=" relative w-full h-full flex items-center justify-center"
       >
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          className=" absolute w-[60%] h-[70%]"
-        >
-          <HassunMainBack />
-        </motion.div>
         <div className=" absolute">
-          <HassunMainText />
+          <HassunBall />
         </div>
       </motion.div>
     </motion.div>

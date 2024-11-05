@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { appStyle } from "../../constants/common";
-import HeaderSVG from "../svg/HeaderSVG";
 import { motion } from "framer-motion";
 import { useSearchParams } from "react-router-dom";
+import { useDetailContext } from "../../providers/DetailProvider";
 type Props = {
   scrollYProgress: number;
 };
@@ -15,7 +15,7 @@ const AppHeader = ({ scrollYProgress }: Props) => {
     x: number;
     y: number;
   }>({ x: 0, y: 0 });
-
+  const { height } = useDetailContext();
   useEffect(() => {
     const newactiveNum = Math.floor(scrollYProgress * 4);
     if (activeNum === newactiveNum) return;
@@ -23,7 +23,6 @@ const AppHeader = ({ scrollYProgress }: Props) => {
   }, [scrollYProgress]);
 
   useEffect(() => {
-    console.log(activeNum);
     if (activeNum > items.length) return;
     if (!refs[activeNum]) return;
 
@@ -64,7 +63,10 @@ const AppHeader = ({ scrollYProgress }: Props) => {
               whileHover={{ scale: 1.1, cursor: "pointer" }}
               whileTap={{ scale: 0.9 }}
               onClick={() => {
-                window.scrollTo({ top: i * 700, behavior: "smooth" });
+                window.scrollTo({
+                  top: i * height,
+                  behavior: "smooth",
+                });
               }}
               ref={refs[i]}
             >
@@ -73,7 +75,6 @@ const AppHeader = ({ scrollYProgress }: Props) => {
           );
         })}
       </div>
-      <HeaderSVG />
     </div>
   );
 };

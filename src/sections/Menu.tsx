@@ -4,72 +4,111 @@ import {
   useMotionValueEvent,
   useTransform,
 } from "framer-motion";
-import Menu1SVG from "../components/svg/Menu1SVG";
-import Menu2SVG from "../components/svg/Menu2SVG";
-import Menu3SVG from "../components/svg/Menu3SVG";
-import big_plate_image from "/hassun-big-plate.jpg";
-
+import bid_plate_image from "/hassun-big-plate.jpg";
+import { Card, Container, GreenContainer } from "../components/util";
+import HassunBall from "../components/svg/HassunBall";
 type Props = {
   scrollYProgress: MotionValue<number>;
 };
 const Menu = ({ scrollYProgress }: Props) => {
   // const opacity = useTransform(scrollYProgress, [1, 0.1, 0], [1, 1, 0]);
-
-  const y = useTransform(
-    scrollYProgress,
-    [0, 1 / 3.1, 2 / 3],
-    [-2000, 0, -2000]
-  );
+  const y = useTransform(scrollYProgress, [0, 1 / 3, 2 / 3], [-2000, 0, -2000]);
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     console.log("MENUUUU: ", latest);
   });
+
+  const alcoholicDrinks = [
+    "レモンサワー",
+    "発酵レモンサワー",
+    "ゆずサワー",
+    "ジンリッキー",
+    "ハイボール",
+    "アップルハイボール",
+    "モヒート",
+    "ソルベサワー",
+    "梅酒",
+    "ビール",
+  ];
+
+  const nonAlcoholicDrinks = [
+    "発酵レモンスカッシュ",
+    "ノンアルモヒート",
+    "ノンアルソルベサワー",
+    "ピンクレモネード",
+    "ノンアルサンライズ",
+  ];
+
   return (
-    <motion.div style={{ color: "#FFA82F", y }} className=" w-full h-full flex">
-      <div className="relative w-[60%]">
-        <div className="absolute top-24 left-5 w-[90%]">
-          <div className="relative w-full h-full">
-            <Label label="今週のHassun" price="（税込み２２００円）" />
-            <Menu1SVG />
-            <div
-              style={{ fontSize: "1.5rem" }}
-              className="absolute top-24 w-[60%] left-10"
-            >
-              旬の魚と野菜をあてに８っ種類の魚のあてを週替わりでご用意しております。
+    <motion.div style={{ y }} className="w-full h-full relative">
+      <div className="w-full h-[10%]"></div>
+      <div className="flex w-[100%] h-[90%] items-center ">
+        <Container
+          content={
+            <div className="p-4">
+              <div className=" text-3xl">FOOD</div>
+              <Card
+                label={"今週のHassun"}
+                desc={
+                  "旬の魚と野菜をあてに８っ種類の魚のあてを週替わりでご用意しております。"
+                }
+                imageurl={bid_plate_image}
+              />
+              <Card
+                label={"今週のHassun"}
+                desc={
+                  "旬の魚と野菜をあてに８っ種類の魚のあてを週替わりでご用意しております。"
+                }
+                imageurl={bid_plate_image}
+              />
+              <Card
+                label={"今週のHassun"}
+                desc={
+                  "旬の魚と野菜をあてに８っ種類の魚のあてを週替わりでご用意しております。"
+                }
+                imageurl={bid_plate_image}
+              />
             </div>
-            <div className="absolute top-44 w-[50%] left-10">
-              ※今週のHassunを注文されない方は、チャージ料としてこちらを注文願います。
+          }
+        />
+        <Container
+          content={
+            <div className="p-4">
+              <div className=" text-3xl">DRINK</div>
+              <GreenContainer>
+                <div className=" text-3xl">
+                  <div>
+                    <div>アルコール</div>
+                    <div className=" flex flex-wrap text-lg ml-4 mt-2">
+                      {alcoholicDrinks.map((item) => {
+                        return (
+                          <div className="w-[50%] py-0.5" key={item}>
+                            {item}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <div className="mt-4">
+                    <div>ノンアルコール</div>
+                    <div className=" flex flex-wrap text-lg ml-4 mt-2">
+                      {nonAlcoholicDrinks.map((item, i) => (
+                        <div className="w-[50%] py-1" key={item + i}>
+                          {item}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </GreenContainer>
             </div>
-            <div
-              style={{
-                backgroundImage: `url(${big_plate_image})`,
-                backgroundSize: "cover",
-              }}
-              className="border border-black absolute bottom-10 left-16 w-[30%] h-[26%]"
-            ></div>
-          </div>
-        </div>
-        <div className="absolute bottom-24 right-0 w-[55%]">
-          <Label label="ケーキセット" price="（税込み５５０円）" />
-          <Menu2SVG />
-        </div>
+          }
+        />
       </div>
-      <div className="relative w-[40%]">
-        <div className="absolute w-[90%] top-20 right-7">
-          <Label label="おつまみセット" price="（税込み５５０円）" />
-          <Menu3SVG />
-        </div>
+      <div className="absolute w-[50%] h-[50%] top-0 -right-72">
+        <HassunBall />
       </div>
     </motion.div>
   );
 };
 
 export default Menu;
-
-const Label = ({ label, price }: { label: string; price: string }) => (
-  <div className="flex items-end mx-5 w-full">
-    <div style={{ fontSize: "2.5rem" }}>{label}</div>
-    <div className=" mb-2" style={{ fontSize: "1.3rem" }}>
-      {price}
-    </div>
-  </div>
-);
