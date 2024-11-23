@@ -14,12 +14,12 @@ const HassunBall = () => {
 
         // 笑顔
         await mouthControls.start({
-          d: "M80 160 Q 121.5 190, 163 160", // 笑顔の形
+          d: "M60 150 Q 120.5 200, 183 150", // 笑顔の形
           transition: { duration: 0.2 },
         });
         await new Promise((resolve) => setTimeout(resolve, 500)); // 笑顔の持続時間
         await mouthControls.start({
-          d: "M80 160 Q 121.5 150, 163 160", // 通常の口の形
+          d: "M60 180 Q 101.5 150, 183 180", // 通常の口の形
           transition: { duration: 0.2 },
         });
 
@@ -69,14 +69,13 @@ const HassunBall = () => {
       {/* "Hassun" を口に見立てた歯として表示 */}
       <motion.path
         id="mouthPath"
-        d="M80 160 Q 121.5 150, 163 160" // 口の初期形状
-        stroke="white"
+        d="M80 190 Q 121.5 150, 163 160" // 口の初期形状
         strokeWidth="5"
         fill="none"
         animate={mouthControls}
       />
       <motion.text
-        fontSize="24" // サイズを大きく調整
+        fontSize="35" // サイズを大きく調整
         fill="white"
         fontWeight="bold"
       >

@@ -1,32 +1,25 @@
-import { useState } from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import AppLayout from "./components/layout/AppLayout";
-import MainPage from "./pages/MainPage";
-import DetailProvider from "./providers/DetailProvider";
-import { APIProvider } from "@vis.gl/react-google-maps";
+import Spoon from "./components/svg/Spoon";
 
 function App() {
-  const [scrollYProgress, setscrollYProgress] = useState(0);
   return (
     <>
-      <DetailProvider>
-        <APIProvider apiKey={"AIzaSyCLMvo_s8JFciYhn2XIBjYADYPn6Vzk_Yw"}>
-          <BrowserRouter>
-            <Routes>
-              <Route element={<AppLayout scrollYProgress={scrollYProgress} />}>
-                <Route
-                  path="/"
-                  element={
-                    <MainPage
-                      onScrollYChange={(scrollY) => setscrollYProgress(scrollY)}
-                    />
-                  }
-                />
-              </Route>
-            </Routes>
-          </BrowserRouter>
-        </APIProvider>
-      </DetailProvider>
+      <div className="w-full h-full flex justify-center items-center">
+        <div className="flex w-[50%] h-full-[50%]">
+          <div className="w-[10%] cutlery">
+            <Spoon></Spoon>
+          </div>
+          <div className="logo">
+            <div className="w-[5%] h-[10%]"></div>
+            <div className="title">
+              H<span>a</span>ssun
+            </div>
+            <div className="sub-title ">Diner</div>
+          </div>
+          <div className="w-[10%] cutlery">
+            <Spoon></Spoon>
+          </div>
+        </div>
+      </div>
     </>
   );
 }

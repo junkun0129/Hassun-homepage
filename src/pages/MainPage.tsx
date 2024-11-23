@@ -29,6 +29,7 @@ const MainPage = ({ onScrollYChange }: Props) => {
       {children}
     </div>
   );
+
   return (
     <div
       ref={globalRef}
@@ -36,23 +37,15 @@ const MainPage = ({ onScrollYChange }: Props) => {
       className=" relative h-full w-full overflow-y-scrol"
     >
       {/* 背景 */}
-      <div className="fixed">
+      <div className="fixed w-full h-full">
         <HassunBackGround />
       </div>
 
       {/* 各ページ */}
-      <Container>
-        <Landing scrollYProgress={scrollYProgress} />
-      </Container>
-      <Container>
-        <Menu scrollYProgress={scrollYProgress} />
-      </Container>
-      <Container>
-        <Concept scrollYProgress={scrollYProgress} />
-      </Container>
-      <Container>
-        <Info scrollYProgress={scrollYProgress} />
-      </Container>
+      <Landing scrollYProgress={scrollYProgress} />
+      <Menu scrollYProgress={scrollYProgress} />
+      <Concept scrollYProgress={scrollYProgress} />
+      <Info scrollYProgress={scrollYProgress} />
 
       {/* スクロール用レイヤー */}
       {Array(4)
