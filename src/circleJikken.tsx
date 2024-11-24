@@ -1,5 +1,5 @@
 import { useState } from "react";
-function App() {
+function CircleJikken() {
   const [unitNum] = useState(12);
   const [position, setPosition] = useState<{ x: number; y: number }>({
     x: 150,
@@ -85,4 +85,4 @@ function App() {
   );
 }
 
-export default App;
+export default CircleJikken;
