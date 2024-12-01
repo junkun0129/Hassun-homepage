@@ -2,7 +2,8 @@
   "files": [],
   "compilerOptions": {
     "noUnusedParameters": false,
-    "noUnusedLocals": false
+    "noUnusedLocals": false,
+    "types": ["google.maps"]
   },
   "references": [
     {

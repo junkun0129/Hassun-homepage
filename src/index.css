@@ -1,82 +1,98 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: "kaisei";
+  src: url("./assets/kaisei.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "grandstar";
+  src: url("./assets/grandstar.ttf") format("truetype");
+}
+
 html,
 body {
-  background: #112 url(//images.weserv.nl/?url=i.imgur.com/6QJjYMe.jpg) center
-    no-repeat;
-  background-size: cover;
   margin: 0;
+  padding: 0;
+  --main-color: #ffa82f;
+  --sub-color: #33806c;
 
-  /* variantrs */
-  --text-color: #fee;
-  --text-shadow-color: #ff4444;
-  --boxshadow-color: #a36464;
-  --subtitle-text-color: #f00000;
-  --box-neon-shadow: 0 0 0.5rem var(--boxshadow-color),
-    inset 0 0 0.5rem var(--boxshadow-color), 0 0 2rem var(--boxshadow-color),
-    inset 0 0 2rem var(--boxshadow-color), 0 0 4rem var(--boxshadow-color),
-    inset 0 0 4rem var(--boxshadow-color);
-  --text-neon-shadow: 0 -40px 100px, 0 0 2px, 0 0 1em var(--text-shadow-color),
-    0 0 0.5em var(--text-shadow-color), 0 0 0.1em var(--text-shadow-color),
-    0 10px 3px #000;
+  width: 100%; /* Ensure body takes up full width */
+  height: 100%;
+  background-color: var(--sub-color);
 }
-.diner {
-  animation: blink linear infinite 2s;
+* {
+  box-sizing: border-box; /* Ensures padding and borders don't cause overflow */
+}
+.main-box {
 }
 
-.cutlery {
-  animation: flicker linear infinite 2s;
+.header {
+  font-family: "grandstar";
+  background-color: var(--main-color);
+  z-index: 10;
 }
 
-@keyframes blink {
-  78% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-  79% {
-    color: #333;
-  }
-  80% {
-    text-shadow: none;
-  }
-  81% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-  82% {
-    color: #333;
-    text-shadow: none;
-  }
-  83% {
-    color: inherit;
-    text-shadow: inherit;
-  }
-  92% {
-    color: #333;
-    text-shadow: none;
-  }
-  92.5% {
-    color: inherit;
-    text-shadow: inherit;
-  }
+.main-content {
+  color: var(--main-color);
+  font-family: "kaisei";
 }
 
-@keyframes flicker {
-  0%,
-  19%,
-  21%,
-  23%,
-  25%,
-  54%,
-  56%,
+.main-images {
+}
+
+.main-images img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  animation: fade 8s infinite; /* アニメーション周期はそのまま8秒 */
+}
+
+.main-images img:nth-child(1) {
+  animation-delay: 0s;
+}
+.main-images img:nth-child(2) {
+  animation-delay: 2s; /* 1枚目の後に表示 */
+}
+.main-images img:nth-child(3) {
+  animation-delay: 4s; /* 2枚目の後に表示 */
+}
+.main-images img:nth-child(4) {
+  animation-delay: 6s; /* 3枚目の後に表示 */
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0; /* フェードアウト開始 */
+    transform: scale(1.1);
+  }
+  12.5%,
+  62.5% {
+    opacity: 1; /* 画像が完全に表示される時間を拡大 */
+  }
+  75%,
   100% {
-    opacity: 1;
+    opacity: 0; /* フェードアウト終了 */
   }
+}
 
-  20%,
-  24%,
-  55% {
-    opacity: 0;
+.scrollallow {
+  animation: down 1.5s infinite;
+}
+
+@keyframes down {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translateY(10px);
+  }
+  40% {
+    transform: translate(0);
   }
 }

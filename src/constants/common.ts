@@ -2,6 +2,6 @@ export const appStyle = {
   headerHeight: 100,
 };
 export const color = {
-  main: "#33806C",
-  text: "#FFA82F",
+  hassun_green: "#33806c",
+  hassun_orange: "#FFA82F",
 };

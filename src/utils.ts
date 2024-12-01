@@ -16,6 +16,6 @@ export function awaitScrollTo(scrollTo: number) {
       }
     };
     window.addEventListener("scroll", checkScroll);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    window.scrollTo({ top: targetPosition, behavior: "smooth" });
   });
 }
