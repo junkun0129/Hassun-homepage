@@ -17,6 +17,11 @@ import HutatsukiIcon from "./components/svg/HutatsukiIcon";
 import About1Icon from "./components/svg/About1Icon";
 import About2Icon from "./components/svg/About2Icon";
 import { useNavigate } from "react-router-dom";
+import DrinkTitleCover from "./components/svg/DrinkTitleCover";
+import DrinkImageUpperFrame from "./components/svg/DrinkImageUpperFrame";
+import DrinkImageBottomFrame from "./components/svg/DrinkImageBottomFrame";
+import drinkmain from "./assets/drink-main.png";
+import DrinkMainBottomCover from "./components/svg/DrinkMainBottomCover";
 type MenuContent = {
   img: string;
   price: string;
@@ -227,27 +232,10 @@ const MenuContent = ({ title, img, price, desc }: MenuContent) => {
 };
 
 function App() {
-  const [drinktabIndex, setDrinktabIndex] = useState(0);
-  const [drinkTabMode, setdrinkTabMode] = useState<"a" | "na">("a");
   const aboutRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const accessref = useRef<HTMLDivElement>(null);
   const aref = useRef(null);
-  const handleClick = (num: number) => {
-    if (num === 1) {
-      if (drinkObject[drinkTabMode].length === drinktabIndex + 1) {
-        return;
-      } else {
-        setDrinktabIndex((pre) => pre + 1);
-      }
-    } else {
-      if (drinktabIndex <= 0) {
-        return;
-      } else {
-        setDrinktabIndex((pre) => pre - 1);
-      }
-    }
-  };
 
   return (
     <>
@@ -436,6 +424,7 @@ function App() {
               })}
             </div>
           </div>
+
           {/* drink */}
           <motion.div
             initial={{ opacity: 0, x: -100 }}
@@ -444,78 +433,34 @@ function App() {
               duration: "0.9",
               easings: [0.17, 0.55, 0.55, 1],
             }}
-            className="w-[90%] relative ml-4 flex flex-col"
+            className="w-[100%] relative flex flex-col"
           >
-            <button
-              onClick={() => handleClick(1)}
-              className="absolute -right-4 top-[300px] rounded-full p-2 bg-gray-400 opacity-15 hover:opacity-100"
-            >
-              →
-            </button>
-            <button
-              onClick={() => handleClick(-1)}
-              className="absolute -left-4 top-[300px] rounded-full p-2 bg-gray-400 opacity-15 hover:opacity-100"
-            >
-              ←
-            </button>
-            <div
-              style={{ fontSize: "2rem" }}
-              className="w-full flex justify-end my-5"
-            >
-              Drink
+            {/* title */}
+            <div className="flex flex-col justify-between items-center">
+              <div className="w-[160%]">
+                <DrinkTitleCover />
+              </div>
             </div>
 
-            {/* mode change */}
-            <button
-              className="flex w-[200px] justify-around py-2 px-1 rounded-lg ml-auto mb-5"
-              style={{ backgroundColor: "#7a5331" }}
-              onClick={() => {
-                setDrinktabIndex(0);
-                setdrinkTabMode((pre) => {
-                  if (pre === "a") {
-                    return "na";
-                  } else {
-                    return "a";
-                  }
-                });
-              }}
-            >
-              <div
-                style={{
-                  color: drinkTabMode === "a" ? "#fff6e2" : "#7a5331",
-                  backgroundColor: drinkTabMode === "a" ? "#7a5331" : "#fff6e2",
-                }}
-                className="rounded-md px-2"
-              >
-                alcohol
-              </div>
-              <div
-                style={{
-                  color: drinkTabMode === "a" ? "#7a5331" : "#fff6e2",
-                  backgroundColor: drinkTabMode === "a" ? "#fff6e2" : "#7a5331",
-                }}
-                className="rounded-md px-2"
-              >
-                non-alcohol
-              </div>
-            </button>
+            <div>moji</div>
 
-            {/* drink display */}
-            <div className="w-full flex flex-wrap justify-around">
-              {drinkObject[drinkTabMode][drinktabIndex].map((element, i) => {
-                return (
-                  <div key={i + element.title} className="w-[35%] my-3">
-                    <img
-                      style={{ width: "100%", height: "150px" }}
-                      src={element.img}
-                    />
-                    <div className="flex my-1 h-[20px]">{element.title} </div>
-                    <div className="h-[50px]" style={{ fontSize: "0.8rem" }}>
-                      {element.desc}
-                    </div>
-                  </div>
-                );
-              })}
+            {/* main image */}
+            <div className="flex flex-col justify-between items-center">
+              <div className="w-[150%] z-20">
+                <DrinkImageUpperFrame />
+              </div>
+              <img className="-my-20 w-[100%] mr-4" src={drinkmain} />
+              <div className="w-[180%]">
+                <DrinkImageBottomFrame />
+              </div>
+            </div>
+            <div>moji</div>
+
+            {/* bottom frame */}
+            <div className="flex flex-col justify-between items-center">
+              <div className="w-[160%]">
+                <DrinkMainBottomCover />
+              </div>
             </div>
           </motion.div>
 
@@ -557,6 +502,17 @@ function App() {
             </button>
           </motion.div>
 
+          {/* access */}
+          <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{
+              duration: "0.9",
+              easings: [0.17, 0.55, 0.55, 1],
+            }}
+            ref={accessref}
+            className="w-[90%] relative ml-4 flex flex-col"
+          ></motion.div>
           {/* ad */}
           <div
             style={{ fontSize: "0.8rem" }}
