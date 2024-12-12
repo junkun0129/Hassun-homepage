@@ -16,17 +16,16 @@ html,
 body {
   margin: 0;
   padding: 0;
-  --main-color: #ffa82f;
-  --sub-color: #33806c;
-
-  width: 100%; /* Ensure body takes up full width */
-  height: 100%;
+  --main-color: #33806c;
+  --sub-color: #ffa82f;
+  overflow-x: hidden;
   background-color: var(--sub-color);
+}
+body {
+  overflow-y: scroll;
 }
 * {
   box-sizing: border-box; /* Ensures padding and borders don't cause overflow */
-}
-.main-box {
 }
 
 .header {
@@ -38,9 +37,7 @@ body {
 .main-content {
   color: var(--main-color);
   font-family: "kaisei";
-}
-
-.main-images {
+  overflow: visible;
 }
 
 .main-images img {
@@ -53,6 +50,9 @@ body {
   animation: fade 8s infinite; /* アニメーション周期はそのまま8秒 */
 }
 
+.container {
+  overflow-x: hidden; /* コンテナ内の横方向のオーバーフローを防ぐ */
+}
 .main-images img:nth-child(1) {
   animation-delay: 0s;
 }
@@ -95,4 +95,73 @@ body {
   40% {
     transform: translate(0);
   }
+}
+.hamburger-menu {
+  position: relative;
+}
+
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
+
+.hamburger-icon .bar {
+  width: 30px;
+  height: 4px;
+  background-color: var(--main-color);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.hamburger-icon.open .bar:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+
+.hamburger-icon.open .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-icon.open .bar:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #ffffff;
+  width: 200px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.menu.open {
+  display: block;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu ul li {
+  margin: 10px 0;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.menu ul li a:hover {
+  color: #f0a500;
 }

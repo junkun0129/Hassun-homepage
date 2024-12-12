@@ -1,253 +1,122 @@
-import { useEffect, useRef, useState } from "react";
+import { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
 import image1 from "./assets/view1new.jpg";
 import image2 from "./assets/view2.jpg";
 import image3 from "./assets/view3.jpg";
 import image4 from "./assets/view4.jpg";
-import hassun from "./assets/hassun.jpg";
-import cakeset from "./assets/cakeset.jpg";
-import otsumami from "./assets/otsumamiset.jpg";
+
 import kanban from "./assets/kanban.jpg";
 import entrance from "./assets/entrance-super.jpg";
 import HassunBall from "./components/svg/HassunBall";
-import MyMap from "./components/MyMap";
-import { motion } from "framer-motion";
-import MailIcon from "./components/svg/MailIcon";
+import { delay, motion, useInView } from "framer-motion";
 import InstagramIcon from "./components/svg/InstagramIcon";
 import HutatsukiIcon from "./components/svg/HutatsukiIcon";
 import About1Icon from "./components/svg/About1Icon";
 import About2Icon from "./components/svg/About2Icon";
-import { useNavigate } from "react-router-dom";
 import DrinkTitleCover from "./components/svg/DrinkTitleCover";
 import DrinkImageUpperFrame from "./components/svg/DrinkImageUpperFrame";
 import DrinkImageBottomFrame from "./components/svg/DrinkImageBottomFrame";
 import drinkmain from "./assets/drink-main.png";
 import DrinkMainBottomCover from "./components/svg/DrinkMainBottomCover";
-type MenuContent = {
-  img: string;
-  price: string;
-  title: string;
-  desc: string;
-};
-const menuArray: MenuContent[] = [
-  {
-    img: hassun,
-    price: "（税込み２２００円）",
-    title: "今週のHassun",
-    desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。　※一日８食限定のため、ご予約でのご来店をおすすめします。",
-  },
-  {
-    img: cakeset,
-    price: "（税込み５５０円）",
-    title: "ケーキセット",
-    desc: "シフォンケーキとコーヒーまたは紅茶ののセットをご用意しております。",
-  },
-  {
-    img: otsumami,
-    price: "（税込み５５０円）",
-    title: "おつまみセット",
-    desc: "特性のディップを載せたクラッカーと、チョコ、ミックスナッツ、燻製チーズを一皿に。",
-  },
-];
-
-const alcoholArray: MenuContent[][] = [
-  [
-    {
-      img: image1,
-      price: "（税込み２００円）",
-      title: "レモンサワー",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image2,
-      price: "（税込み２００円）",
-      title: "発酵レモンサワー",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image3,
-      price: "（税込み２００円）",
-      title: "ゆずサワー",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image3,
-      price: "（税込み２００円）",
-      title: "ジンリッキー",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-  ],
-  [
-    {
-      img: image1,
-      price: "（税込み２００円）",
-      title: "ハイボール",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image2,
-      price: "（税込み２００円）",
-      title: "アップルハイボール",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image3,
-      price: "（税込み２００円）",
-      title: "モヒート",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image3,
-      price: "（税込み２００円）",
-      title: "ソルベサワー",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-  ],
-  [
-    {
-      img: image1,
-      price: "（税込み２００円）",
-      title: "梅酒",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image2,
-      price: "（税込み２００円）",
-      title: "ビール",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: "",
-      price: "",
-      title: "",
-      desc: "",
-    },
-    {
-      img: "",
-      price: "",
-      title: "",
-      desc: "",
-    },
-  ],
-];
-
-const nonAlcoholArray: MenuContent[][] = [
-  [
-    {
-      img: image1,
-      price: "（税込み２００円）",
-      title: "発酵レモンスカッシュ",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image2,
-      price: "（税込み２００円）",
-      title: "ノンアルモヒート",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image3,
-      price: "（税込み２００円）",
-      title: "ノンアルソルベサワー",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: image3,
-      price: "（税込み２００円）",
-      title: "ピンクレモネード",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-  ],
-  [
-    {
-      img: image1,
-      price: "（税込み２００円）",
-      title: "ノンアルサンライズ",
-      desc: "旬の野菜と魚のあてに８っ種類の魚のあてを週替わりでご用意しております。",
-    },
-    {
-      img: "",
-      price: "",
-      title: "",
-      desc: "",
-    },
-    {
-      img: "",
-      price: "",
-      title: "",
-      desc: "",
-    },
-    {
-      img: "",
-      price: "",
-      title: "",
-      desc: "",
-    },
-  ],
-];
-
-const drinkObject = {
-  a: alcoholArray,
-  na: nonAlcoholArray,
-};
-
-const MenuContent = ({ title, img, price, desc }: MenuContent) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: -100 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      transition={{
-        delay: 0,
-        duration: "0.9",
-        easings: [0.17, 0.55, 0.55, 1],
-      }}
-      className="mt-10 mb-24 mx-5"
-    >
-      {/* 写真 */}
-      <div
-        style={{ width: "100%", height: "252px" }}
-        className=" overflow-hidden rounded-lg"
-      >
-        <img
-          src={img}
-          style={{
-            objectFit: "cover",
-            width: "500px",
-            height: "300px",
-          }}
-        />
-      </div>
-      {/* 料理名＋値段 */}
-      <div className="flex my-1">
-        {/* 料理名 */}
-        <div className="mt-1" style={{ fontSize: "1.3rem" }}>
-          {title}
-        </div>
-        {/* 値段 */}
-        <div className="mt-2">{price}</div>
-      </div>
-      {/* 説明 */}
-      <div>{desc}</div>
-    </motion.div>
-  );
-};
+import { sendEmailApi } from "./api/mail.api";
+import { color } from "./constants/common";
+import { useMediaQuery } from "react-responsive";
+import { menuArray, MenuContents } from "./data/menu";
+import HamburgerMenu from "./components/utils/HamburgerMenu";
+import Section from "./components/utils/Section";
+import MenuContent from "./components/utils/MenuContent";
+import MyMap from "./components/utils/MyMap";
+import DrinkTitleHolder from "./components/svg/DrinkTitleHolder";
+import FlexDrinkMenuHolder from "./components/svg/FlexDrinkMenuHolder";
 
 function App() {
   const aboutRef = useRef<HTMLDivElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
   const accessref = useRef<HTMLDivElement>(null);
-  const aref = useRef(null);
+  const contactref = useRef<HTMLDivElement>(null);
 
+  const resObject = {
+    about: aboutRef,
+    menu: menuRef,
+    access: accessref,
+    contact: contactref,
+  };
+
+  const [isAlc, setisAlc] = useState(true);
+  const [emailButtonText, setemailButtonText] = useState("送信");
+  const [isMobileMenuOpen, setisMobileMenuOpen] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 640 });
+  const aref = useRef<HTMLAnchorElement>(null);
+
+  const wait = (num: number): Promise<void> =>
+    new Promise((resolve, _) => {
+      setTimeout(() => {
+        resolve();
+      }, num);
+    });
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setemailButtonText("・・・・送信中・・・・");
+    const data = new FormData(event.target as any);
+    const email = data.get("email");
+    const text = data.get("text");
+
+    if (!email || !text) return;
+    try {
+      const res = await sendEmailApi({
+        mailtext: text as string,
+        from: email as string,
+      });
+      setemailButtonText("メールが送信されました");
+      await wait(3000);
+      setemailButtonText("送信");
+    } catch (error) {
+      console.log(error);
+      setemailButtonText("メールの送信に失敗しました");
+      await wait(1000);
+      setemailButtonText("送信");
+    }
+  };
   return (
     <>
+      {isMobileMenuOpen && (
+        <div
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          className="z-40 fixed w-full h-full"
+        ></div>
+      )}
+      {/* mobile menu bar */}
+      {isMobile && (
+        <div className="fixed top-3 right-10 z-50">
+          <HamburgerMenu
+            isOpen={isMobileMenuOpen}
+            setIsOpen={(e) => setisMobileMenuOpen(e)}
+            setisMobileMenuOpen={setisMobileMenuOpen}
+            resObject={resObject}
+          />
+        </div>
+      )}
+
       <div
-        style={{
-          width: "97vw",
-          height: "100vh",
-        }}
+        style={
+          isMobile
+            ? {
+                width: "100vw",
+                height: "100vh",
+                marginLeft: "15px",
+              }
+            : {
+                width: "100vw",
+                height: "100vh",
+              }
+        }
         className="flex relative"
       >
-        {/* main image on the left */}
-        <div className="h-full w-[50%] main-images fixed z-20 overflow-hidden ">
+        {/* Main image on the left */}
+        <div
+          style={isMobile ? { display: "none" } : { display: "flex" }}
+          className="h-full w-[50%] main-images fixed z-20 overflow-hidden "
+        >
           <img src={image1} />
           <img src={kanban} />
           <img src={kanban} />
@@ -256,23 +125,35 @@ function App() {
 
         {/* main content */}
         <div
-          className="w-[36.1%] main-content relative z-10"
-          style={{ transform: "translateX(calc(50vw))" }}
+          className="main-content relative z-10"
+          style={
+            isMobile
+              ? { width: "100%" }
+              : {
+                  transform: "translateX(calc(51vw))",
+                  width: "35.1%",
+                }
+          }
         >
           {/* Hassunボール */}
-          <div className=" absolute w-[80px] h-[80px] left-2 top-2">
+          <div
+            style={
+              isMobile ? { left: "2px", top: "10px" } : { display: "flex" }
+            }
+            className=" absolute w-[80px] h-[80px] top-2"
+          >
             <HassunBall />
           </div>
 
           {/* ランディングページ */}
-          <div className="w-[90%] h-[100vh] relative ml-4">
+          <div className="w-[90%] h-[100vh] relative ">
             {/* キャッチコピー */}
             <div className="w-[40%] flex flex-col items-start my-6 ml-auto">
               <div>for those</div>
               <div>looking for cozy place</div>
             </div>
             {/* 切り替わる画像 */}
-            <div className="h-[370px] w-[90%] main-images fixed rounded-lg overflow-hidden shadow-lg">
+            <div className="h-[370px] w-[100%] main-images absolute rounded-lg overflow-hidden shadow-lg">
               <img src={image4} />
               <img src={image3} />
               <img src={image2} />
@@ -280,7 +161,7 @@ function App() {
             </div>
             {/* スクロール */}
             <div className=" w-full absolute bottom-10 flex justify-end">
-              <div className="mr-2 mt-[1px] scrollallow">⇩</div>
+              <div className=" mt-[1px] scrollallow">⇩</div>
               <div>scroll</div>
             </div>
           </div>
@@ -288,119 +169,60 @@ function App() {
           {/* コンセプト */}
           <motion.div
             ref={aboutRef}
-            className="w-[90%] h-[100vh] relative ml-4 flex flex-col"
+            className="w-[90%] h-[100vh] relative  flex flex-col overflow-hidden"
           >
             {/* タイトル */}
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                duration: "0.9",
-                easings: [0.17, 0.55, 0.55, 1],
-              }}
-              style={{ fontSize: "1.5rem" }}
-              className="my-10"
-            >
+
+            <Section style={{ fontSize: "1.5rem" }} className="my-10">
               女性だけの空間を、
               <br />
               あなたに。
-            </motion.div>
+            </Section>
 
             {/* 文言１ */}
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 0.5,
-                duration: "0.9",
-                easings: [0.17, 0.55, 0.55, 1],
-              }}
-            >
+            <Section>
               にぎやかな町の中で、
               <br />
               ほんの少し、足を休める場所。
               <br />
               今日はどんな週替わりの“あて”に出会えるだろう？
               <br />
-            </motion.div>
+            </Section>
 
             {/* 文言２ */}
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 1,
-                duration: "0.9",
-                easings: [0.17, 0.55, 0.55, 1],
-              }}
-              style={{ textAlign: "right" }}
-              className="ml-auto my-20"
-            >
+            <Section style={{ textAlign: "right" }} className="ml-auto my-20">
               「Hassun」は、
               <br />
               女性が安心して立ち寄れる、
               <br />
               大皿にのった8種類の酒のあてとお酒の店。
-            </motion.div>
+            </Section>
 
             {/* 文言３ */}
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 1.5,
-                duration: "0.9",
-                easings: [0.17, 0.55, 0.55, 1],
-              }}
-            >
+            <Section>
               気軽に訪れて、
               <br />
               心がふっと軽くなるような、
               <br />
               そんなひとときをご提供します。
-            </motion.div>
+            </Section>
 
             {/* svgs */}
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 0,
-                duration: "0.9",
-                easings: [0.17, 0.55, 0.55, 1],
-              }}
-              className="absolute top-10 right-0 w-[150px] h-[150px]"
-            >
+            <Section className="absolute top-10 right-0 w-[150px] h-[150px]">
               <HutatsukiIcon />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 0.5,
-                duration: "0.9",
-                easings: [0.17, 0.55, 0.55, 1],
-              }}
-              className="absolute -left-32 top-56 w-[300px] h-[200px]"
-            >
+            </Section>
+
+            <Section className="absolute -left-32 top-56 w-[80%] h-[200px]">
               <About1Icon />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, x: -100 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{
-                delay: 1.5,
-                duration: "0.9",
-                easings: [0.17, 0.55, 0.55, 1],
-              }}
-              className="absolute -bottom-5 -right-20 w-[280px] h-[200px]"
-            >
+            </Section>
+
+            <Section className="absolute bottom-10 -right-20 w-[65%] h-[200px]">
               <About2Icon />
-            </motion.div>
+            </Section>
           </motion.div>
 
           {/* メニュー */}
-          <div ref={menuRef} className="w-[90%] relative ml-4 flex flex-col">
+          <div ref={menuRef} className="w-[90%] relative  flex flex-col">
             <div>
               {/* コンテンツタイトル */}
               <div
@@ -426,64 +248,164 @@ function App() {
           </div>
 
           {/* drink */}
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: "0.9",
-              easings: [0.17, 0.55, 0.55, 1],
-            }}
-            className="w-[100%] relative flex flex-col"
-          >
+          <Section className="w-[100%] relative flex flex-col right-5">
             {/* title */}
-            <div className="flex flex-col justify-between items-center">
-              <div className="w-[160%]">
-                <DrinkTitleCover />
+            <div className="flex flex-col justify-between items-center relative z-50">
+              <div className="w-[130%]">
+                <DrinkTitleHolder />
+              </div>
+              <div
+                className="absolute right-5 top-5"
+                style={{
+                  fontSize: "2.5rem",
+                  fontFamily: "grandstar",
+                  color: color.hassun_green,
+                }}
+              >
+                drink
               </div>
             </div>
 
-            <div>moji</div>
+            <div
+              className="-my-5 px-10"
+              style={{
+                color: color.hassun_orange,
+                zIndex: 10,
+              }}
+            >
+              試行錯誤を重ねて生まれた、550円の特別な一杯。
+              <br />
+              冷凍フルーツが溶けゆくノンアルコールドリンクは、最後のひとくちまで爽やかさを届けます。
+              <br />
+              ぜひ味わいにいらしてください。
+            </div>
 
-            {/* main image */}
-            <div className="flex flex-col justify-between items-center">
-              <div className="w-[150%] z-20">
+            {/* drink-main-image */}
+            <div className="flex flex-col justify-between items-center relative">
+              <div className="w-[130%] absolute -top-10">
                 <DrinkImageUpperFrame />
               </div>
-              <img className="-my-20 w-[100%] mr-4" src={drinkmain} />
-              <div className="w-[180%]">
+              <img className="-z-20 w-[100%] " src={drinkmain} />
+              <div className="w-[150%] absolute -bottom-24">
                 <DrinkImageBottomFrame />
               </div>
             </div>
-            <div>moji</div>
 
-            {/* bottom frame */}
-            <div className="flex flex-col justify-between items-center">
-              <div className="w-[160%]">
-                <DrinkMainBottomCover />
+            <div className=" h-[100px] z-0"></div>
+
+            {!!isAlc && (
+              <motion.div
+                initial={{ y: 50, opacity: 0, rotate: -10 }}
+                animate={{
+                  y: 0,
+                  opacity: 1,
+                  transition: { y: { delay: 1.2 }, opacity: { delay: 1.2 } },
+                }}
+                className="absolute w-[100px] h-[100px] top-[67%] right-[30%]"
+              >
+                <HassunBall />
+              </motion.div>
+            )}
+            {!!isAlc && (
+              <div className="absolute top-[60%] left-7">
+                <Section>
+                  発酵レモンスカッシュ
+                  <br />
+                  ノンアルモヒート <br />
+                  ノンアルソルベサワー
+                  <br /> ピンクレモネード <br />
+                  ノンアルサンライズ
+                </Section>
+              </div>
+            )}
+
+            {!isAlc && (
+              <div
+                style={{ color: color.hassun_green }}
+                className="absolute top-[62%] left-7 z-50"
+              >
+                <Section>
+                  レモンサワー
+                  <br />
+                  発酵レモンサワー <br />
+                  ゆずサワー
+                  <br /> ジンリッキー <br />
+                  ハイボール
+                </Section>
+              </div>
+            )}
+            {!isAlc && (
+              <div
+                style={{ color: color.hassun_green }}
+                className="absolute top-[68%] left-[40%] z-50"
+              >
+                <Section>
+                  ビール
+                  <br />
+                  モヒート <br />
+                  ソルベサワー
+                  <br /> 梅酒 <br />
+                  アップルハイボール
+                </Section>
+              </div>
+            )}
+
+            <div
+              style={{
+                color: isAlc ? color.hassun_orange : color.hassun_green,
+              }}
+              className="flex w-full justify-end z-50 pr-5"
+            >
+              <button
+                onClick={() => {
+                  setisAlc((pre) => !pre);
+                }}
+              >
+                {isAlc ? "alcohol" : "non-alcohol"}
+              </button>
+            </div>
+
+            {/* bottom green space */}
+            <div className="flex flex-col justify-between items-center relative z-40">
+              <div className="w-[130%] relative">
+                <FlexDrinkMenuHolder isAlc={isAlc} />
+                {!isAlc && (
+                  <div className="absolute  flex justify-center w-[150px] h-[500px] top-[-38.5%] right-[36%] overflow-hidden">
+                    <motion.div
+                      initial={{ opacity: 0, y: -150, rotate: 178 }}
+                      animate={{
+                        opacity: 1,
+                        y: -40,
+                        transition: {
+                          opacity: { delay: 1.2 },
+                          y: { delay: 1.2 },
+                        },
+                      }}
+                      className="w-[100px] h-[100px]"
+                    >
+                      <HassunBall />
+                    </motion.div>
+                  </div>
+                )}
               </div>
             </div>
-          </motion.div>
+          </Section>
 
           {/* access */}
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: "0.9",
-              easings: [0.17, 0.55, 0.55, 1],
-            }}
-            ref={accessref}
-            className="w-[90%] relative ml-4 flex flex-col"
-          >
+          <Section className="w-[90%] relative  flex flex-col">
             <div
+              ref={accessref}
               style={{ fontSize: "2rem" }}
               className="w-full flex justify-end my-5 mt-20"
             >
               Access
             </div>
-            <div className=" overflow-hidden rounded-lg ">
+            <motion.div
+              whileTap={{ scale: 0.9 }}
+              className=" overflow-hidden rounded-lg "
+            >
               <MyMap />
-            </div>
+            </motion.div>
             <div className="my-2" style={{ fontSize: "1.2rem" }}>
               Hassun
             </div>
@@ -494,29 +416,50 @@ function App() {
             <div className="mt-2">営業時間：17:00~23:00</div>
             <div>定休日：月曜日・火曜日・水曜日</div>
             <div>電話：082-909-9760</div>
-            <button
-              style={{ border: "solid 1px #7a5331", fontSize: "0.9rem" }}
-              className="rounded-full py-3 mt-3 hover:bg-white"
-            >
-              席のご予約はこちら
-            </button>
-          </motion.div>
+          </Section>
 
-          {/* access */}
-          <motion.div
-            initial={{ opacity: 0, x: -100 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{
-              duration: "0.9",
-              easings: [0.17, 0.55, 0.55, 1],
-            }}
-            ref={accessref}
-            className="w-[90%] relative ml-4 flex flex-col"
-          ></motion.div>
+          {/* contact */}
+          <Section className="w-[80%] relative  flex flex-col">
+            {/* コンテンツタイトル */}
+            <div
+              style={{ fontSize: "2rem" }}
+              className="w-full flex justify-end my-5 mt-20"
+              ref={contactref}
+            >
+              Contact
+            </div>
+            <form
+              className="w-full flex flex-col justify-between items-center"
+              onSubmit={handleSubmit}
+            >
+              <input
+                className="w-full rounded-md p-2"
+                required
+                name="email"
+                placeholder="email@example.com"
+              />
+              <textarea
+                required
+                className="my-5 w-full rounded-md p-2"
+                name="text"
+                placeholder="こちらにお問い合わせ内容を記載し、”送信”ボタンを押してください。"
+              />
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                style={{ border: `${color.hassun_orange} solid 1px` }}
+                className="w-full py-3 rounded-md hover:bg-slate-100 bg-opacity-35"
+                type="submit"
+                disabled={emailButtonText !== "送信"}
+              >
+                {emailButtonText}
+              </motion.button>
+            </form>
+          </Section>
+
           {/* ad */}
           <div
             style={{ fontSize: "0.8rem" }}
-            className="w-[90%] h-[40px] relative ml-4 flex justify-center items-center my-2 mb-10"
+            className="w-[90%] h-[40px] relative  flex justify-center items-center my-2 mb-10"
           >
             ©︎Hassun
           </div>
@@ -524,8 +467,12 @@ function App() {
 
         {/* app header */}
         <div
-          style={{ color: "#33806c" }}
-          className="h-full w-[15%] z-40 header fixed right-0 flex flex-col justify-around items-center"
+          style={
+            isMobile
+              ? { display: "none" }
+              : { display: "flex", color: color.hassun_green }
+          }
+          className="h-full w-[15%] header fixed right-[16px] flex flex-col justify-around items-center"
         >
           <button
             style={{
@@ -540,59 +487,27 @@ function App() {
             Hassun
           </button>
           <div className="flex flex-col">
-            <motion.button
-              whileTap={{ scale: 0.8 }}
-              whileHover={{ scale: 1.2 }}
-              onClick={() => {
-                if (!aboutRef.current) return;
-                const y =
-                  aboutRef.current.getBoundingClientRect().top + window.scrollY; // 修正
-                window.scrollTo({
-                  top: y,
-                  behavior: "smooth",
-                });
-              }}
-            >
-              about
-            </motion.button>
-            <motion.button
-              whileTap={{ scale: 0.8 }}
-              whileHover={{ scale: 1.2 }}
-              className="my-2"
-              onClick={() => {
-                if (!menuRef.current) return;
-                const y =
-                  menuRef.current.getBoundingClientRect().top + window.scrollY; // 修正
-                window.scrollTo({
-                  top: y,
-                  behavior: "smooth",
-                });
-              }}
-            >
-              menu
-            </motion.button>
-            <motion.button
-              whileTap={{ scale: 0.8 }}
-              whileHover={{ scale: 1.2 }}
-              onClick={() => {
-                if (!accessref.current) return;
-                const y =
-                  accessref.current.getBoundingClientRect().top +
-                  window.scrollY; // 修正
-                window.scrollTo({
-                  top: y,
-                  behavior: "smooth",
-                });
-              }}
-            >
-              access
-            </motion.button>
+            {Object.entries(resObject).map(([key, value], i) => (
+              <motion.button
+                whileTap={{ scale: 0.8 }}
+                whileHover={{ scale: 1.2 }}
+                className="mb-2"
+                onClick={() => {
+                  if (!value.current) return;
+                  const y =
+                    value.current.getBoundingClientRect().top + window.scrollY; // 修正
+                  window.scrollTo({
+                    top: y,
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                {key}
+              </motion.button>
+            ))}
           </div>
 
           <div className="flex">
-            {/* <div>
-              <MailIcon />
-            </div> */}
             <motion.button
               whileTap={{ scale: 0.8 }}
               whileHover={{ scale: 1.2 }}
