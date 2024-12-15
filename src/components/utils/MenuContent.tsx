@@ -1,8 +1,10 @@
 import React from "react";
 import { MenuContents } from "../../data/menu";
 import Section from "./Section";
-
-const MenuContent = ({ title, img, price, desc }: MenuContents) => {
+type Props = MenuContents & {
+  isMobile: boolean;
+};
+const MenuContent = ({ title, img, price, desc, comment, isMobile }: Props) => {
   return (
     <Section className="mt-10 mb-24 mx-5">
       {/* 写真 */}
@@ -20,7 +22,10 @@ const MenuContent = ({ title, img, price, desc }: MenuContents) => {
         />
       </div>
       {/* 料理名＋値段 */}
-      <div className="flex my-1">
+      <div
+        style={isMobile ? { flexDirection: "column" } : {}}
+        className="flex my-1"
+      >
         {/* 料理名 */}
         <div className="mt-1" style={{ fontSize: "1.3rem" }}>
           {title}
@@ -30,6 +35,10 @@ const MenuContent = ({ title, img, price, desc }: MenuContents) => {
       </div>
       {/* 説明 */}
       <div>{desc}</div>
+      {/* コメント */}
+      <div className="mt-1" style={{ fontSize: "0.8rem" }}>
+        {comment}
+      </div>
     </Section>
   );
 };

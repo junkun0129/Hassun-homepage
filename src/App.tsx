@@ -27,6 +27,8 @@ import MenuContent from "./components/utils/MenuContent";
 import MyMap from "./components/utils/MyMap";
 import DrinkTitleHolder from "./components/svg/DrinkTitleHolder";
 import FlexDrinkMenuHolder from "./components/svg/FlexDrinkMenuHolder";
+import AccessPath from "./components/svg/AccessPath";
+import ConceptDrinkLogo from "./components/svg/ConceptDrinkLogo";
 
 function App() {
   const aboutRef = useRef<HTMLDivElement>(null);
@@ -40,6 +42,12 @@ function App() {
     access: accessref,
     contact: contactref,
   };
+
+  // Contact
+  const emailRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [isEmailHassun, setisEmailHassun] = useState(false);
+  const [isTexthassun, setisTexthassun] = useState(false);
 
   const [isAlc, setisAlc] = useState(true);
   const [emailButtonText, setemailButtonText] = useState("送信");
@@ -70,6 +78,14 @@ function App() {
       setemailButtonText("メールが送信されました");
       await wait(3000);
       setemailButtonText("送信");
+      setisTexthassun(false);
+      setisEmailHassun(false);
+      if (textAreaRef.current) {
+        textAreaRef.current.value = "";
+      }
+      if (emailRef.current) {
+        emailRef.current.value = "";
+      }
     } catch (error) {
       console.log(error);
       setemailButtonText("メールの送信に失敗しました");
@@ -166,21 +182,32 @@ function App() {
             </div>
           </div>
 
+          <div
+            ref={accessref}
+            style={{ fontSize: "2rem" }}
+            className="w-full flex justify-center mt-20"
+          >
+            Access
+          </div>
           {/* コンセプト */}
           <motion.div
             ref={aboutRef}
-            className="w-[90%] h-[100vh] relative  flex flex-col overflow-hidden"
+            className="w-[100%] h-[100vh] relative right-5  flex flex-col overflow-hidden"
           >
+            <Section className="w-[120px] h-[120px] absolute top-10 right-10">
+              <ConceptDrinkLogo />
+            </Section>
+
             {/* タイトル */}
 
-            <Section style={{ fontSize: "1.5rem" }} className="my-10">
+            <Section style={{ fontSize: "1.5rem" }} className="my-10 ml-5">
               女性だけの空間を、
               <br />
               あなたに。
             </Section>
 
             {/* 文言１ */}
-            <Section>
+            <Section className=" ml-5">
               にぎやかな町の中で、
               <br />
               ほんの少し、足を休める場所。
@@ -190,7 +217,10 @@ function App() {
             </Section>
 
             {/* 文言２ */}
-            <Section style={{ textAlign: "right" }} className="ml-auto my-20">
+            <Section
+              style={{ textAlign: "right" }}
+              className="ml-auto my-20 mr-4"
+            >
               「Hassun」は、
               <br />
               女性が安心して立ち寄れる、
@@ -199,7 +229,7 @@ function App() {
             </Section>
 
             {/* 文言３ */}
-            <Section>
+            <Section className="  ml-5">
               気軽に訪れて、
               <br />
               心がふっと軽くなるような、
@@ -208,15 +238,15 @@ function App() {
             </Section>
 
             {/* svgs */}
-            <Section className="absolute top-10 right-0 w-[150px] h-[150px]">
+            {/* <Section className="absolute top-10 right-0 w-[150px] h-[150px]">
               <HutatsukiIcon />
-            </Section>
+            </Section> */}
 
-            <Section className="absolute -left-32 top-56 w-[80%] h-[200px]">
+            <Section className="absolute -left-32 top-56 w-[80%] h-[30%]">
               <About1Icon />
             </Section>
 
-            <Section className="absolute bottom-10 -right-20 w-[65%] h-[200px]">
+            <Section className="absolute -bottom-10 -right-20 w-[60%] h-[50%]">
               <About2Icon />
             </Section>
           </motion.div>
@@ -227,13 +257,13 @@ function App() {
               {/* コンテンツタイトル */}
               <div
                 style={{ fontSize: "2rem" }}
-                className="w-full flex justify-end my-5 mt-20"
+                className="w-full flex justify-center my-5 mt-20"
               >
                 Menu
               </div>
 
               {/* Food１（今週のHassun） */}
-              {menuArray.map(({ title, desc, price, img }, i) => {
+              {menuArray.map(({ title, desc, price, img, comment }, i) => {
                 return (
                   <MenuContent
                     key={i + title}
@@ -241,6 +271,8 @@ function App() {
                     desc={desc}
                     price={price}
                     img={img}
+                    isMobile={isMobile}
+                    comment={comment}
                   />
                 );
               })}
@@ -307,7 +339,7 @@ function App() {
               </motion.div>
             )}
             {!!isAlc && (
-              <div className="absolute top-[60%] left-7">
+              <div className="absolute top-[60%] left-7 z-50">
                 <Section>
                   発酵レモンスカッシュ
                   <br />
@@ -319,12 +351,12 @@ function App() {
               </div>
             )}
 
-            {!isAlc && (
-              <div
-                style={{ color: color.hassun_green }}
-                className="absolute top-[62%] left-7 z-50"
-              >
-                <Section>
+            <div
+              style={{ color: color.hassun_green }}
+              className="absolute top-[63%] left-[10%] z-50"
+            >
+              {!isAlc && (
+                <Section className="w-full z-50">
                   レモンサワー
                   <br />
                   発酵レモンサワー <br />
@@ -332,14 +364,14 @@ function App() {
                   <br /> ジンリッキー <br />
                   ハイボール
                 </Section>
-              </div>
-            )}
-            {!isAlc && (
-              <div
-                style={{ color: color.hassun_green }}
-                className="absolute top-[68%] left-[40%] z-50"
-              >
-                <Section>
+              )}
+            </div>
+            <div
+              style={{ color: color.hassun_green }}
+              className="absolute top-[68%] left-[40%] z-50"
+            >
+              {!isAlc && (
+                <Section className="w-full">
                   ビール
                   <br />
                   モヒート <br />
@@ -347,46 +379,36 @@ function App() {
                   <br /> 梅酒 <br />
                   アップルハイボール
                 </Section>
-              </div>
-            )}
+              )}
+            </div>
 
             <div
               style={{
                 color: isAlc ? color.hassun_orange : color.hassun_green,
               }}
-              className="flex w-full justify-end z-50 pr-5"
+              className="flex flex-col w-full items-end z-50 pr-5"
             >
+              <div
+                style={{ fontSize: "0.7rem" }}
+                className="flex flex-col items-center scrollallow"
+              >
+                <div>クリック</div>
+                <div className="">⇩</div>
+              </div>
               <button
                 onClick={() => {
                   setisAlc((pre) => !pre);
                 }}
+                style={{ fontSize: "1.2rem" }}
               >
                 {isAlc ? "alcohol" : "non-alcohol"}
               </button>
             </div>
 
             {/* bottom green space */}
-            <div className="flex flex-col justify-between items-center relative z-40">
+            <div className="flex flex-col justify-between items-center relative z-10">
               <div className="w-[130%] relative">
                 <FlexDrinkMenuHolder isAlc={isAlc} />
-                {!isAlc && (
-                  <div className="absolute  flex justify-center w-[150px] h-[500px] top-[-38.5%] right-[36%] overflow-hidden">
-                    <motion.div
-                      initial={{ opacity: 0, y: -150, rotate: 178 }}
-                      animate={{
-                        opacity: 1,
-                        y: -40,
-                        transition: {
-                          opacity: { delay: 1.2 },
-                          y: { delay: 1.2 },
-                        },
-                      }}
-                      className="w-[100px] h-[100px]"
-                    >
-                      <HassunBall />
-                    </motion.div>
-                  </div>
-                )}
               </div>
             </div>
           </Section>
@@ -396,7 +418,7 @@ function App() {
             <div
               ref={accessref}
               style={{ fontSize: "2rem" }}
-              className="w-full flex justify-end my-5 mt-20"
+              className="w-full flex justify-center my-5 mt-0"
             >
               Access
             </div>
@@ -416,14 +438,17 @@ function App() {
             <div className="mt-2">営業時間：17:00~23:00</div>
             <div>定休日：月曜日・火曜日・水曜日</div>
             <div>電話：082-909-9760</div>
+            <div className="w-[100%] h-[100%]">
+              <AccessPath />
+            </div>
           </Section>
 
           {/* contact */}
-          <Section className="w-[80%] relative  flex flex-col">
+          <Section className="w-[90%] relative  flex flex-col">
             {/* コンテンツタイトル */}
             <div
               style={{ fontSize: "2rem" }}
-              className="w-full flex justify-end my-5 mt-20"
+              className="w-full flex justify-center my-5 mt-0"
               ref={contactref}
             >
               Contact
@@ -432,22 +457,61 @@ function App() {
               className="w-full flex flex-col justify-between items-center"
               onSubmit={handleSubmit}
             >
-              <input
-                className="w-full rounded-md p-2"
-                required
-                name="email"
-                placeholder="email@example.com"
-              />
-              <textarea
-                required
-                className="my-5 w-full rounded-md p-2"
-                name="text"
-                placeholder="こちらにお問い合わせ内容を記載し、”送信”ボタンを押してください。"
-              />
+              <div
+                style={{ backgroundColor: color.hassun_green }}
+                className="w-full relative flex flex-col justify-between"
+              >
+                <input
+                  className="w-full rounded-md p-2"
+                  required
+                  ref={emailRef}
+                  onBlur={() => {
+                    if (!emailRef.current) return;
+                    if (emailRef.current.value) {
+                      setisEmailHassun(true);
+                    }
+                  }}
+                  name="email"
+                  placeholder="email@example.com"
+                />
+
+                <textarea
+                  required
+                  ref={textAreaRef}
+                  className="mt-5 w-full rounded-md p-2"
+                  name="text"
+                  onBlur={() => {
+                    if (!textAreaRef.current) return;
+                    if (textAreaRef.current.value) {
+                      setisTexthassun(true);
+                    }
+                  }}
+                  placeholder="こちらにお問い合わせ内容を記載し、”送信”ボタンを押してください。"
+                />
+                <motion.div
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={isEmailHassun ? { y: 0, opacity: 1 } : {}}
+                  className="absolute -top-14 left-5 -z-10 w-[100px] h-[100px]"
+                >
+                  <HassunBall />
+                </motion.div>
+
+                <motion.div
+                  initial={{ y: -50, opacity: 0, rotate: 180 }}
+                  animate={isTexthassun ? { y: 0, opacity: 1 } : {}}
+                  className="absolute -bottom-14 right-5 -z-10 w-[100px] h-[100px]"
+                >
+                  <HassunBall />
+                </motion.div>
+              </div>
               <motion.button
                 whileTap={{ scale: 0.9 }}
                 style={{ border: `${color.hassun_orange} solid 1px` }}
-                className="w-full py-3 rounded-md hover:bg-slate-100 bg-opacity-35"
+                whileHover={{
+                  boxShadow:
+                    "0px 2px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -3px 6px -2px",
+                }}
+                className="w-full py-3 rounded-md mt-10"
                 type="submit"
                 disabled={emailButtonText !== "送信"}
               >
