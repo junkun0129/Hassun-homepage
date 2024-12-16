@@ -394,7 +394,7 @@ function App() {
                 className="flex flex-col items-center scrollallow"
               >
                 <div>クリック</div>
-                <div className="">⇩</div>
+                <div>⇩</div>
               </div>
               <button
                 onClick={() => {
