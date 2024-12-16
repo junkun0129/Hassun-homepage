@@ -340,7 +340,7 @@ function App() {
               </motion.div>
             )}
             {!!isAlc && (
-              <div className="absolute top-[60%] left-7 z-50">
+              <div className="absolute top-[60%] w-full left-7 z-50">
                 <Section>
                   発酵レモンスカッシュ
                   <br />
@@ -354,7 +354,7 @@ function App() {
 
             <div
               style={{ color: color.hassun_green }}
-              className="absolute top-[63%] left-[10%] z-50"
+              className="absolute w-full top-[63%] left-[10%] z-50"
             >
               {!isAlc && (
                 <Section className="w-full z-50">
@@ -369,7 +369,7 @@ function App() {
             </div>
             <div
               style={{ color: color.hassun_green }}
-              className="absolute top-[68%] left-[40%] z-50"
+              className="absolute w-full top-[67%] left-[40%] z-50"
             >
               {!isAlc && (
                 <Section className="w-full">
