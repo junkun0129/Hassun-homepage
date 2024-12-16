@@ -26,7 +26,6 @@ const FlexDrinkMenuHolder = ({ isAlc }: Props) => {
       }}
       className={"overflow-hidden"}
       viewBox={viewBox}
-      preserveAspectRatio="xMidYMin slice"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
@@ -54,34 +53,10 @@ const FlexDrinkMenuHolder = ({ isAlc }: Props) => {
         y="0"
         width="100%"
         height="100%"
-        clipPath="url(#clip-path)"
+        // clipPath="url(#clip-path)"
       >
         {/* SVG内のHTMLコンテンツ */}
-        <div
-          className="w-full h-full relative"
-          style={{
-            backgroundColor: color.hassun_orange,
-          }}
-        >
-          <div className="absolute  flex justify-center w-[70px] h-[80px] right-24 top-6  overflow-hidden">
-            {!isAlc && (
-              <motion.div
-                initial={{ opacity: 0, y: -150, rotate: 178 }}
-                animate={{
-                  opacity: 1,
-                  y: -40,
-                  transition: {
-                    opacity: { delay: 1.2 },
-                    y: { delay: 1.2 },
-                  },
-                }}
-                className="w-[100px] h-[100px]"
-              >
-                <HassunBall />
-              </motion.div>
-            )}
-          </div>
-        </div>
+        ;alsdkfas;dklj;
       </foreignObject>
     </motion.svg>
   );
