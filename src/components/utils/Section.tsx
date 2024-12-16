@@ -1,5 +1,5 @@
 import { useInView } from "framer-motion";
-import React, { CSSProperties, ReactNode, useRef } from "react";
+import { CSSProperties, ReactNode, useRef } from "react";
 
 const Section = ({
   children,

@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React from "react";
+
 import { color } from "../../constants/common";
 import HassunBall from "./HassunBall";
 

@@ -1,5 +1,5 @@
 import { motion, useInView } from "framer-motion";
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 const ConceptDrinkLogo = () => {
   const ref = useRef(null);

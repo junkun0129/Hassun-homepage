@@ -1,4 +1,4 @@
-import { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import image1 from "./assets/view1new.jpg";
 import image2 from "./assets/view2.jpg";
 import image3 from "./assets/view3.jpg";
@@ -7,25 +7,25 @@ import image4 from "./assets/view4.jpg";
 import kanban from "./assets/kanban.jpg";
 import entrance from "./assets/entrance-super.jpg";
 import HassunBall from "./components/svg/HassunBall";
-import { delay, motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import InstagramIcon from "./components/svg/InstagramIcon";
-import HutatsukiIcon from "./components/svg/HutatsukiIcon";
+
 import About1Icon from "./components/svg/About1Icon";
 import About2Icon from "./components/svg/About2Icon";
-import DrinkTitleCover from "./components/svg/DrinkTitleCover";
+
 import DrinkImageUpperFrame from "./components/svg/DrinkImageUpperFrame";
 import DrinkImageBottomFrame from "./components/svg/DrinkImageBottomFrame";
 import drinkmain from "./assets/drink-main.png";
-import DrinkMainBottomCover from "./components/svg/DrinkMainBottomCover";
+
 import { sendEmailApi } from "./api/mail.api";
 import { color } from "./constants/common";
 import { useMediaQuery } from "react-responsive";
-import { menuArray, MenuContents } from "./data/menu";
+import { menuArray } from "./data/menu";
 import HamburgerMenu from "./components/utils/HamburgerMenu";
 import Section from "./components/utils/Section";
 import MenuContent from "./components/utils/MenuContent";
 import MyMap from "./components/utils/MyMap";
-import DrinkTitleHolder from "./components/svg/DrinkTitleHolder";
+
 import FlexDrinkMenuHolder from "./components/svg/FlexDrinkMenuHolder";
 import AccessPath from "./components/svg/AccessPath";
 import ConceptDrinkLogo from "./components/svg/ConceptDrinkLogo";
@@ -42,6 +42,8 @@ function App() {
     access: accessref,
     contact: contactref,
   };
+
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   // Contact
   const emailRef = useRef<HTMLInputElement>(null);
@@ -71,7 +73,7 @@ function App() {
 
     if (!email || !text) return;
     try {
-      const res = await sendEmailApi({
+      await sendEmailApi({
         mailtext: text as string,
         from: email as string,
       });
@@ -114,6 +116,7 @@ function App() {
       )}
 
       <div
+        ref={scrollRef}
         style={
           isMobile
             ? {
@@ -126,7 +129,7 @@ function App() {
                 height: "100vh",
               }
         }
-        className="flex relative"
+        className="flex relative overflow-auto"
       >
         {/* Main image on the left */}
         <div
@@ -186,6 +189,12 @@ function App() {
             ref={accessref}
             style={{ fontSize: "2rem" }}
             className="w-full flex justify-center mt-20"
+            onClick={() => {
+              window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+            }}
           >
             Access
           </div>
@@ -281,21 +290,13 @@ function App() {
 
           {/* drink */}
           <Section className="w-[100%] relative flex flex-col right-5">
-            {/* title */}
-            <div className="flex flex-col justify-between items-center relative z-50">
-              <div className="w-[130%]">
-                <DrinkTitleHolder />
-              </div>
-              <div
-                className="absolute right-5 top-5"
-                style={{
-                  fontSize: "2.5rem",
-                  fontFamily: "grandstar",
-                  color: color.hassun_green,
-                }}
-              >
-                drink
-              </div>
+            {/* コンテンツタイトル */}
+            <div
+              style={{ fontSize: "2rem" }}
+              className="w-full flex justify-center my-5 mt-0 mb-10"
+              ref={contactref}
+            >
+              Drink
             </div>
 
             <div
@@ -551,19 +552,18 @@ function App() {
             Hassun
           </button>
           <div className="flex flex-col">
-            {Object.entries(resObject).map(([key, value], i) => (
+            {Object.entries(resObject).map(([key, value]) => (
               <motion.button
                 whileTap={{ scale: 0.8 }}
                 whileHover={{ scale: 1.2 }}
                 className="mb-2"
                 onClick={() => {
                   if (!value.current) return;
+
                   const y =
                     value.current.getBoundingClientRect().top + window.scrollY; // 修正
-                  window.scrollTo({
-                    top: y,
-                    behavior: "smooth",
-                  });
+                  if (!scrollRef.current) return;
+                  scrollRef.current.scrollTo({ top: y, behavior: "smooth" });
                 }}
               >
                 {key}

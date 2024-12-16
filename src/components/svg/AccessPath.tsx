@@ -1,5 +1,5 @@
-import { motion, useAnimation, useInView } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 import HassunBall from "./HassunBall";
 
 const transition = {

@@ -1,4 +1,3 @@
-import React from "react";
 import { MenuContents } from "../../data/menu";
 import Section from "./Section";
 type Props = MenuContents & {

@@ -22,7 +22,7 @@ body {
   background-color: var(--sub-color);
 }
 body {
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 * {
   box-sizing: border-box; /* Ensures padding and borders don't cause overflow */
@@ -37,7 +37,6 @@ body {
 .main-content {
   color: var(--main-color);
   font-family: "kaisei";
-  overflow: visible;
 }
 
 .main-images img {
