@@ -53,7 +53,7 @@ function App() {
 
   const [isAlc, setisAlc] = useState(true);
   const [emailButtonText, setemailButtonText] = useState("送信");
-  const [isMobileMenuOpen, setisMobileMenuOpen] = useState(false);
+  const [isMobileMenuOpen] = useState(false);
   const isMobile = useMediaQuery({ maxWidth: 640 });
   const aref = useRef<HTMLAnchorElement>(null);
 
