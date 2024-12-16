@@ -10,7 +10,6 @@ export function awaitScrollTo(scrollTo: number) {
     const targetPosition = scrollTo; // スクロール目標
     const checkScroll = () => {
       if (Math.abs(window.scrollY - targetPosition) <= 1) {
-        // 目標位置に到達
         window.removeEventListener("scroll", checkScroll);
         resolve(); // 完了通知
       }
