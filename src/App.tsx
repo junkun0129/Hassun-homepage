@@ -21,7 +21,7 @@ import { sendEmailApi } from "./api/mail.api";
 import { color } from "./constants/common";
 import { useMediaQuery } from "react-responsive";
 import { menuArray } from "./data/menu";
-import HamburgerMenu from "./components/utils/HamburgerMenu";
+// import HamburgerMenu from "./components/utils/HamburgerMenu";
 import Section from "./components/utils/Section";
 import MenuContent from "./components/utils/MenuContent";
 import MyMap from "./components/utils/MyMap";
@@ -104,7 +104,7 @@ function App() {
         ></div>
       )}
       {/* mobile menu bar */}
-      {isMobile && (
+      {/* {isMobile && (
         <div className="fixed top-3 right-10 z-50">
           <HamburgerMenu
             isOpen={isMobileMenuOpen}
@@ -113,7 +113,7 @@ function App() {
             resObject={resObject}
           />
         </div>
-      )}
+      )} */}
 
       <div
         ref={scrollRef}
@@ -251,13 +251,72 @@ function App() {
               <HutatsukiIcon />
             </Section> */}
 
-            <Section className="absolute -left-32 top-56 w-[80%] h-[30%]">
+            <div className="absolute top-56 -left-32 w-[80%] h-[30%]">
               <About1Icon />
-            </Section>
+            </div>
 
-            <Section className="absolute -bottom-10 -right-20 w-[60%] h-[50%]">
+            <div className="absolute -bottom-10 -right-20 w-[60%] h-[50%]">
               <About2Icon />
-            </Section>
+            </div>
+
+            <motion.div
+              initial={{ rotate: -90, x: 0 }}
+              animate={{
+                x: [100, 0, 0, 100], // 移動先で静止する
+                transition: {
+                  x: {
+                    duration: 5, // 全体のアニメーションの時間
+                    times: [0, 0.1, 0.5, 1], // 停止する時間を設定
+                    ease: "easeInOut", // スムーズな動き
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  },
+                },
+              }}
+              className="w-[100px] h-[100px] absolute -top-0 -right-10"
+            >
+              <HassunBall />
+            </motion.div>
+
+            <motion.div
+              initial={{ rotate: 90, x: 0 }}
+              animate={{
+                x: [-100, 0, 0, -100], // 移動先で静止する
+                transition: {
+                  x: {
+                    delay: 2,
+                    duration: 5, // 全体のアニメーションの時間
+                    times: [0, 0.1, 0.5, 1], // 停止する時間を設定
+                    ease: "easeInOut", // スムーズな動き
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  },
+                },
+              }}
+              className="w-[100px] h-[100px] absolute -left-10 top-[50%]"
+            >
+              <HassunBall />
+            </motion.div>
+
+            <motion.div
+              initial={{ rotate: -90, x: 0 }}
+              animate={{
+                x: [100, 0, 0, 100], // 移動先で静止する
+                transition: {
+                  x: {
+                    delay: 5,
+                    duration: 5, // 全体のアニメーションの時間
+                    times: [0, 0.1, 0.5, 1], // 停止する時間を設定
+                    ease: "easeInOut", // スムーズな動き
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  },
+                },
+              }}
+              className="w-[100px] h-[100px] absolute -right-10 top-[80%]"
+            >
+              <HassunBall />
+            </motion.div>
           </motion.div>
 
           {/* メニュー */}
@@ -306,9 +365,11 @@ function App() {
                 zIndex: 10,
               }}
             >
-              試行錯誤を重ねて生まれた、550円の特別な一杯。
+              試行錯誤を繰り返し５５０円で提供します。
               <br />
-              冷凍フルーツが溶けゆくノンアルコールドリンクは、最後のひとくちまで爽やかさを届けます。
+              ノンアルコールドリンクにはすべて冷凍フルーツが入っており、
+              <br />
+              最後の一口までさわやかさを届けます。
               <br />
               ぜひ味わいにいらしてください。
             </div>
@@ -402,7 +463,7 @@ function App() {
                 }}
                 style={{ fontSize: "1.2rem" }}
               >
-                {isAlc ? "alcohol" : "non-alcohol"}
+                {isAlc ? "non-alcohol" : "alcohol"}
               </button>
             </div>
 
