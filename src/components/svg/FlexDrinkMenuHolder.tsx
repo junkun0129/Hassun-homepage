@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 import { color } from "../../constants/common";
-import HassunBall from "./HassunBall";
+// import HassunBall from "./HassunBall";
 
 type Props = {
   isAlc: boolean;
