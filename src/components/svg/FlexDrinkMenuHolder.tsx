@@ -32,7 +32,7 @@ const FlexDrinkMenuHolder = ({ isAlc }: Props) => {
     >
       {/* ClipPath 定義 */}
       <defs>
-        <clipPath id="clip-path">
+        <clipPath clipPathUnits={"userSpaceOnUse"} id="clip-path">
           <motion.path
             d={isAlc ? alcPathD : nonAlcPathD}
             fill={color.hassun_orange}

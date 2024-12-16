@@ -129,7 +129,7 @@ function App() {
                 height: "100vh",
               }
         }
-        className="flex relative overflow-auto"
+        className="flex relative overflow-x-hidden overflow-y-scroll"
       >
         {/* Main image on the left */}
         <div
