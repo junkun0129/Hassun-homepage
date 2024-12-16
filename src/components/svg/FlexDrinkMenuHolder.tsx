@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 
 import { color } from "../../constants/common";
-// import HassunBall from "./HassunBall";
+import HassunBall from "./HassunBall";
 
 type Props = {
   isAlc: boolean;
@@ -29,15 +29,12 @@ const FlexDrinkMenuHolder = ({ isAlc }: Props) => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* ClipPath 定義 */}
+      {/* ClipPath Definition */}
       <defs>
-        <clipPath clipPathUnits={"userSpaceOnUse"} id="clip-path">
+        <clipPath id="clip-path">
           <motion.path
             d={isAlc ? alcPathD : nonAlcPathD}
-            fill={color.hassun_orange}
-            animate={{
-              d: isAlc ? alcPathD : nonAlcPathD,
-            }}
+            animate={{ d: isAlc ? alcPathD : nonAlcPathD }}
             initial={{ d: isAlc ? nonAlcPathD : alcPathD }}
             transition={{
               duration: 0.5,
@@ -47,17 +44,28 @@ const FlexDrinkMenuHolder = ({ isAlc }: Props) => {
         </clipPath>
       </defs>
 
-      {/* クリップ適用 */}
-      <foreignObject
-        x="0"
-        y="0"
-        width="100%"
-        height="100%"
-        // clipPath="url(#clip-path)"
-      >
-        {/* SVG内のHTMLコンテンツ */}
-        ;alsdkfas;dklj;
-      </foreignObject>
+      {/* Apply ClipPath */}
+      <g clipPath="url(#clip-path)">
+        {/* Background rectangle */}
+        <rect x="0" y="0" width="353" height="169" fill={color.hassun_orange} />
+
+        {/* Ball animation */}
+        {!isAlc && (
+          <motion.g
+            initial={{ opacity: 0, y: -150, rotate: 178 }}
+            animate={{
+              opacity: 1,
+              y: -40,
+              transition: {
+                opacity: { delay: 1.2 },
+                y: { delay: 1.2 },
+              },
+            }}
+          >
+            <HassunBall />
+          </motion.g>
+        )}
+      </g>
     </motion.svg>
   );
 };
