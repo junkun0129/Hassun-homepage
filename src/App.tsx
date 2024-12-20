@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import image1 from "./assets/view1new.jpg";
-import image2 from "./assets/view2.jpg";
-import image3 from "./assets/view3.jpg";
+import image2 from "./assets/doorstylish.jpg";
+import image3 from "./assets/entrancestylish.jpg";
 import image4 from "./assets/view4.jpg";
 
 import kanban from "./assets/kanban.jpg";
@@ -137,9 +137,9 @@ function App() {
           className="h-full w-[50%] main-images fixed z-20 overflow-hidden "
         >
           <img src={image1} />
-          <img src={kanban} />
-          <img src={kanban} />
-          <img src={entrance} />
+          <img src={image2} />
+          <img src={image3} />
+          <img src={image4} />
         </div>
 
         {/* main content */}
@@ -167,9 +167,10 @@ function App() {
           {/* ランディングページ */}
           <div className="w-[90%] h-[100vh] relative ">
             {/* キャッチコピー */}
-            <div className="w-[40%] flex flex-col items-start my-6 ml-auto">
-              <div>for those</div>
-              <div>looking for cozy place</div>
+            <div className="w-[60%] flex flex-col items-start my-6 ml-auto">
+              <div style={{ fontSize: "2rem", fontFamily: "grandstar" }}>
+                Women Only Dining Bar
+              </div>
             </div>
             {/* 切り替わる画像 */}
             <div className="h-[370px] w-[100%] main-images absolute rounded-lg overflow-hidden shadow-lg">
@@ -196,7 +197,7 @@ function App() {
               });
             }}
           >
-            Access
+            About
           </div>
           {/* コンセプト */}
           <motion.div
@@ -216,7 +217,7 @@ function App() {
             </Section>
 
             {/* 文言１ */}
-            <Section className=" ml-5">
+            <Section className=" ml-5 -mt-3">
               にぎやかな町の中で、
               <br />
               ほんの少し、足を休める場所。
@@ -365,13 +366,13 @@ function App() {
                 zIndex: 10,
               }}
             >
-              試行錯誤を繰り返し５５０円で提供します。
+              当店のドリンクは全て550円（税込）。
               <br />
-              ノンアルコールドリンクにはすべて冷凍フルーツが入っており、
+              試行錯誤を重ねて作り上げた自慢の一杯ばかりです。
               <br />
-              最後の一口までさわやかさを届けます。
+              アルコールからノンアルコールまで
               <br />
-              ぜひ味わいにいらしてください。
+              どなたでも楽しめるラインナップをご用意しております。
             </div>
 
             {/* drink-main-image */}
@@ -500,6 +501,7 @@ function App() {
             <div className="mt-2">営業時間：17:00~23:00</div>
             <div>定休日：月曜日・火曜日・水曜日</div>
             <div>電話：082-909-9760</div>
+            <div>喫煙スペースあり（加熱式タバコのみ）</div>
             <div className="w-[100%] h-[100%]">
               <AccessPath />
             </div>
