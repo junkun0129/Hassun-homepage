@@ -4,8 +4,6 @@ import image2 from "./assets/doorstylish.jpg";
 import image3 from "./assets/entrancestylish.jpg";
 import image4 from "./assets/view4.jpg";
 
-import kanban from "./assets/kanban.jpg";
-import entrance from "./assets/entrance-super.jpg";
 import HassunBall from "./components/svg/HassunBall";
 import { motion } from "framer-motion";
 import InstagramIcon from "./components/svg/InstagramIcon";
