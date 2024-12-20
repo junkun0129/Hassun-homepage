@@ -167,7 +167,8 @@ function App() {
             {/* キャッチコピー */}
             <div className="w-[60%] flex flex-col items-start my-6 ml-auto">
               <div style={{ fontSize: "2rem", fontFamily: "grandstar" }}>
-                Women Only Dining Bar
+                Women Only <br />
+                Dining Bar
               </div>
             </div>
             {/* 切り替わる画像 */}
@@ -364,7 +365,7 @@ function App() {
                 zIndex: 10,
               }}
             >
-              当店のドリンクは全て550円（税込）。
+              ドリンクは全て550円（税込）。
               <br />
               試行錯誤を重ねて作り上げた自慢の一杯ばかりです。
               <br />
