@@ -161,7 +161,6 @@ function App() {
           >
             <HassunBall />
           </div>
-
           {/* ランディングページ */}
           <div className="w-[90%] h-[100vh] relative ">
             {/* キャッチコピー */}
@@ -184,7 +183,6 @@ function App() {
               <div>scroll</div>
             </div>
           </div>
-
           <div
             ref={accessref}
             style={{ fontSize: "2rem" }}
@@ -318,7 +316,6 @@ function App() {
               <HassunBall />
             </motion.div>
           </motion.div>
-
           {/* メニュー */}
           <div ref={menuRef} className="w-[90%] relative  flex flex-col">
             <div>
@@ -346,7 +343,6 @@ function App() {
               })}
             </div>
           </div>
-
           {/* drink */}
           <Section className="w-[100%] relative flex flex-col right-5">
             {/* コンテンツタイトル */}
@@ -474,7 +470,6 @@ function App() {
               </div>
             </div>
           </Section>
-
           {/* access */}
           <Section className="w-[90%] relative  flex flex-col">
             <div
@@ -500,7 +495,10 @@ function App() {
             <div className="mt-2">営業時間：17:00~23:00</div>
             <div>定休日：月曜日・火曜日・水曜日</div>
             <div>電話：082-909-9760</div>
-            <div>喫煙スペースあり（加熱式タバコのみ）</div>
+            <div>
+              予約方法：電話、インスタグラム、または下記のフォームからお願いいたします。
+            </div>
+            <div>※喫煙スペースあり（加熱式タバコのみ）</div>
             <div className="w-[100%] h-[100%]">
               <AccessPath />
             </div>
@@ -510,12 +508,32 @@ function App() {
           <Section className="w-[90%] relative  flex flex-col">
             {/* コンテンツタイトル */}
             <div
-              style={{ fontSize: "2rem" }}
-              className="w-full flex justify-center my-5 mt-0"
+              className="w-full flex justify-center  items-center my-5 mt-0"
               ref={contactref}
             >
-              Contact
+              <div style={{ fontSize: "2rem" }}>Contact</div>
+
+              <div className="flex flex-col items-center -mt-14">
+                <div className="scrollallow flex flex-col items-center ml-6">
+                  <span className="-mb-4" style={{ fontSize: "0.7rem" }}>
+                    インスタグラム
+                  </span>
+                  <br />⇩
+                </div>
+                <motion.button
+                  whileTap={{ scale: 0.8 }}
+                  whileHover={{ scale: 1.2 }}
+                  className="w-[40px] h-[40px] rounded-full ml-6 mt-4"
+                  onClick={() => {
+                    if (!aref.current) return;
+                    aref.current.click();
+                  }}
+                >
+                  <InstagramIcon color={color.hassun_orange} />
+                </motion.button>
+              </div>
             </div>
+
             <form
               className="w-full flex flex-col justify-between items-center"
               onSubmit={handleSubmit}
@@ -582,7 +600,6 @@ function App() {
               </motion.button>
             </form>
           </Section>
-
           {/* ad */}
           <div
             style={{ fontSize: "0.8rem" }}
@@ -643,14 +660,14 @@ function App() {
                 aref.current.click();
               }}
             >
-              <InstagramIcon />
-              <a
-                href="https://www.instagram.com/hassun3fb?igsh=eDNmN201ZGZtMHd5"
-                style={{ display: "none" }}
-                ref={aref}
-                target="_blank"
-              />
+              <InstagramIcon color={color.hassun_green} />
             </motion.button>
+            <a
+              href="https://www.instagram.com/hassun3fb?igsh=eDNmN201ZGZtMHd5"
+              style={{ display: "none" }}
+              ref={aref}
+              target="_blank"
+            />
           </div>
         </div>
       </div>
