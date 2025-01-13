@@ -651,25 +651,34 @@ function App() {
           >
             Hassun
           </button>
-          <div className="flex flex-col">
+          <nav className="flex flex-col">
             {Object.entries(resObject).map(([key, value]) => (
               <motion.button
+                key={key}
                 whileTap={{ scale: 0.8 }}
                 whileHover={{ scale: 1.2 }}
                 className="mb-2"
                 onClick={() => {
                   if (!value.current) return;
 
-                  const y =
-                    value.current.getBoundingClientRect().top + window.scrollY; // 修正
-                  if (!scrollRef.current) return;
-                  scrollRef.current.scrollTo({ top: y, behavior: "smooth" });
+                  // Get element position
+                  const element = value.current;
+                  const headerOffset = 80; // ヘッダーの高さ分のオフセット
+                  const elementPosition = element.getBoundingClientRect().top;
+                  const offsetPosition =
+                    elementPosition + window.pageYOffset - headerOffset;
+
+                  // Scroll to element
+                  window.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth",
+                  });
                 }}
               >
                 {key}
               </motion.button>
             ))}
-          </div>
+          </nav>
 
           <div className="flex">
             <motion.button
