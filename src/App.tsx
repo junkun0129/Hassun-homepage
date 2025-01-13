@@ -209,7 +209,7 @@ function App() {
 
             <Section
               style={{ fontSize: "1.5rem" }}
-              className="my-10 ml-5 w-[50%] flex flex-nowrap"
+              className="my-10 ml-5 w-[50%] flex flex-nowrap z-50"
             >
               女性だけの空間を、
               <br />
@@ -223,7 +223,7 @@ function App() {
               {/* 文言１ */}
               <Section
                 style={{ backgroundColor: color.hassun_green }}
-                className=" ml-5 -mt-3 z-40 rounded-lg p-2 shadow-lg"
+                className=" ml-7 -mt-3 z-40 rounded-lg p-2 shadow-lg"
               >
                 にぎやかな町の中で、
                 <br />
@@ -251,7 +251,7 @@ function App() {
               {/* 文言３ */}
               <Section
                 style={{ backgroundColor: color.hassun_green }}
-                className="ml-5 z-40 rounded-lg p-2 shadow-lg mb-4"
+                className="ml-8 z-40 rounded-lg p-2 shadow-lg mb-4 mx-5"
               >
                 気軽に訪れて、
                 <br /> 心がふっと軽くなるような、
