@@ -206,14 +206,24 @@ function App() {
             </Section>
 
             {/* タイトル */}
-
             <Section
-              style={{ fontSize: "1.5rem" }}
-              className="my-10 ml-5 w-[50%] flex flex-nowrap z-50"
+              style={{ fontSize: "clamp(1.2rem, 4vw, 1.5rem)" }}
+              className="my-10 ml-5 md:ml-8 relative z-50 min-h-[100px]"
             >
-              女性だけの空間を、
-              <br />
-              あなたに。
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.6 },
+                }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="whitespace-nowrap"
+              >
+                女性だけの空間を、
+                <br />
+                あなたに。
+              </motion.h2>
             </Section>
 
             <div
@@ -239,7 +249,7 @@ function App() {
                   textAlign: "right",
                   backgroundColor: color.hassun_green,
                 }}
-                className="ml-auto my-20 mr-4 z-40 rounded-lg p-2 shadow-lg"
+                className="mx-3 ml-8 my-20 z-40 rounded-lg p-2 shadow-lg"
               >
                 「Hassun」は、
                 <br />
