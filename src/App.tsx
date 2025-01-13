@@ -199,26 +199,32 @@ function App() {
           {/* コンセプト */}
           <motion.div
             ref={aboutRef}
-            className="w-[100%] h-[100vh] relative right-5  flex flex-col  overflow-hidden"
+            className="w-[100%] relative right-5  flex flex-col  overflow-hidden"
           >
-            <Section className="w-[120px] h-[120px] absolute top-10 right-10">
+            <Section className="w-[120px] h-[120px] absolute top-5 right-2">
               <ConceptDrinkLogo />
             </Section>
 
             {/* タイトル */}
 
-            <Section style={{ fontSize: "1.5rem" }} className="my-10 ml-5">
+            <Section
+              style={{ fontSize: "1.5rem" }}
+              className="my-10 ml-5 w-[50%] flex flex-nowrap"
+            >
               女性だけの空間を、
               <br />
-              <span className="ml-56">あなたに。</span>
+              あなたに。
             </Section>
 
             <div
               style={{ fontSize: "1.1rem" }}
-              className="flex flex-col justify-between h-[60%]"
+              className="flex flex-col justify-between overflow-visible"
             >
               {/* 文言１ */}
-              <Section className=" ml-5 -mt-3">
+              <Section
+                style={{ backgroundColor: color.hassun_green }}
+                className=" ml-5 -mt-3 z-40 rounded-lg p-2 shadow-lg"
+              >
                 にぎやかな町の中で、
                 <br />
                 ほんの少し、足を休める場所。
@@ -229,8 +235,11 @@ function App() {
 
               {/* 文言２ */}
               <Section
-                style={{ textAlign: "right" }}
-                className="ml-auto my-20 mr-4"
+                style={{
+                  textAlign: "right",
+                  backgroundColor: color.hassun_green,
+                }}
+                className="ml-auto my-20 mr-4 z-40 rounded-lg p-2 shadow-lg"
               >
                 「Hassun」は、
                 <br />
@@ -240,7 +249,10 @@ function App() {
               </Section>
 
               {/* 文言３ */}
-              <Section className="  ml-5">
+              <Section
+                style={{ backgroundColor: color.hassun_green }}
+                className="ml-5 z-40 rounded-lg p-2 shadow-lg mb-4"
+              >
                 気軽に訪れて、
                 <br /> 心がふっと軽くなるような、
                 <br />
@@ -248,16 +260,11 @@ function App() {
               </Section>
             </div>
 
-            {/* svgs */}
-            {/* <Section className="absolute top-10 right-0 w-[150px] h-[150px]">
-              <HutatsukiIcon />
-            </Section> */}
-
-            <div className="absolute top-56 -left-32 w-[80%] h-[30%]">
+            <div className="absolute top-32 -left-32 w-[100%] h-[50%]">
               <About1Icon />
             </div>
 
-            <div className="absolute -bottom-10 -right-20 w-[60%] h-[50%]">
+            <div className="absolute -bottom-10 -right-20 w-[80%] h-[50%]">
               <About2Icon />
             </div>
 
@@ -275,7 +282,7 @@ function App() {
                   },
                 },
               }}
-              className="w-[100px] h-[100px] absolute -top-0 -right-10"
+              className="w-[100px] h-[100px] absolute -top-0 -right-10 z-50"
             >
               <HassunBall />
             </motion.div>
@@ -295,7 +302,7 @@ function App() {
                   },
                 },
               }}
-              className="w-[100px] h-[100px] absolute -left-10 top-[50%]"
+              className="w-[100px] h-[100px] absolute -left-10 top-[50%] z-50"
             >
               <HassunBall />
             </motion.div>
@@ -315,7 +322,7 @@ function App() {
                   },
                 },
               }}
-              className="w-[100px] h-[100px] absolute -right-10 top-[80%]"
+              className="w-[100px] h-[100px] absolute -right-10 top-[80%] z-50"
             >
               <HassunBall />
             </motion.div>
@@ -430,15 +437,15 @@ function App() {
             </div>
             <div
               style={{ color: color.hassun_green }}
-              className="absolute w-full top-[67%] left-[40%] z-50"
+              className="absolute w-full top-[65%] left-[50%] z-50"
             >
               {!isAlc && (
-                <Section className="w-full">
+                <Section className="w-full ">
                   ビール
                   <br />
                   モヒート <br />
-                  ソルベサワー
-                  <br /> 梅酒 <br />
+                  梅酒
+                  <br /> ソルベサワー <br />
                   アップルハイボール
                 </Section>
               )}
