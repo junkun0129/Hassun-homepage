@@ -199,7 +199,7 @@ function App() {
           {/* コンセプト */}
           <motion.div
             ref={aboutRef}
-            className="w-[100%] h-[100vh] relative right-5  flex flex-col overflow-hidden"
+            className="w-[100%] h-[100vh] relative right-5  flex flex-col  overflow-hidden"
           >
             <Section className="w-[120px] h-[120px] absolute top-10 right-10">
               <ConceptDrinkLogo />
@@ -210,39 +210,43 @@ function App() {
             <Section style={{ fontSize: "1.5rem" }} className="my-10 ml-5">
               女性だけの空間を、
               <br />
-              あなたに。
+              <span className="ml-56">あなたに。</span>
             </Section>
 
-            {/* 文言１ */}
-            <Section className=" ml-5 -mt-3">
-              にぎやかな町の中で、
-              <br />
-              ほんの少し、足を休める場所。
-              <br />
-              今日はどんな週替わりの“あて”に出会えるだろう？
-              <br />
-            </Section>
-
-            {/* 文言２ */}
-            <Section
-              style={{ textAlign: "right" }}
-              className="ml-auto my-20 mr-4"
+            <div
+              style={{ fontSize: "1.1rem" }}
+              className="flex flex-col justify-between h-[60%]"
             >
-              「Hassun」は、
-              <br />
-              女性が安心して立ち寄れる、
-              <br />
-              大皿にのった8種類の酒のあてとお酒の店。
-            </Section>
+              {/* 文言１ */}
+              <Section className=" ml-5 -mt-3">
+                にぎやかな町の中で、
+                <br />
+                ほんの少し、足を休める場所。
+                <br />
+                今日はどんな週替わりの“あて”に出会えるだろう？
+                <br />
+              </Section>
 
-            {/* 文言３ */}
-            <Section className="  ml-5">
-              気軽に訪れて、
-              <br />
-              心がふっと軽くなるような、
-              <br />
-              そんなひとときをご提供します。
-            </Section>
+              {/* 文言２ */}
+              <Section
+                style={{ textAlign: "right" }}
+                className="ml-auto my-20 mr-4"
+              >
+                「Hassun」は、
+                <br />
+                女性が安心して立ち寄れる、
+                <br />
+                大皿にのった8種類の酒のあてとお酒の店。
+              </Section>
+
+              {/* 文言３ */}
+              <Section className="  ml-5">
+                気軽に訪れて、
+                <br /> 心がふっと軽くなるような、
+                <br />
+                そんなひとときをご提供します。
+              </Section>
+            </div>
 
             {/* svgs */}
             {/* <Section className="absolute top-10 right-0 w-[150px] h-[150px]">
