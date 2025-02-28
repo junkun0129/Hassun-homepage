@@ -484,7 +484,7 @@ function App() {
               </button>
             </div>
 
-            {/* bottom green space */}
+            {/* botom green space */}
             <div className="flex flex-col justify-between items-center relative z-10">
               <div className="w-[130%] relative">
                 <FlexDrinkMenuHolder isAlc={isAlc} />
