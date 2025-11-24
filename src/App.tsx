@@ -101,19 +101,9 @@ function App() {
           className="z-40 fixed w-full h-full"
         ></div>
       )}
-      {/* mobile menu bar */}
-      {/* {isMobile && (
-        <div className="fixed top-3 right-10 z-50">
-          <HamburgerMenu
-            isOpen={isMobileMenuOpen}
-            setIsOpen={(e) => setisMobileMenuOpen(e)}
-            setisMobileMenuOpen={setisMobileMenuOpen}
-            resObject={resObject}
-          />
-        </div>
-      )} */}
-
-      <div
+      
+      {/* SEO: Changed main wrapper div to <main> and attached scrollRef correctly */}
+      <main
         ref={scrollRef}
         style={
           isMobile
@@ -134,10 +124,11 @@ function App() {
           style={isMobile ? { display: "none" } : { display: "flex" }}
           className="h-full w-[50%] main-images fixed z-20 overflow-hidden "
         >
-          <img src={image1} />
-          <img src={image2} />
-          <img src={image3} />
-          <img src={image4} />
+          {/* SEO: Added alt tags */}
+          <img src={image1} alt="Bar Interior View" />
+          <img src={image2} alt="Stylish Door" />
+          <img src={image3} alt="Entrance" />
+          <img src={image4} alt="Bar Atmosphere" />
         </div>
 
         {/* main content */}
@@ -165,17 +156,19 @@ function App() {
           <div className="w-[90%] h-[100vh] relative ">
             {/* キャッチコピー */}
             <div className="w-[60%] flex flex-col items-start my-6 ml-auto">
-              <div style={{ fontSize: "2rem", fontFamily: "grandstar" }}>
+              {/* SEO: Changed to h1 for main title importance */}
+              <h1 style={{ fontSize: "2rem", fontFamily: "grandstar", fontWeight: "normal" }}>
                 Women Only <br />
                 Dining Bar
-              </div>
+              </h1>
             </div>
             {/* 切り替わる画像 */}
             <div className="h-[370px] w-[100%] main-images absolute rounded-lg overflow-hidden shadow-lg">
-              <img src={image4} />
-              <img src={image3} />
-              <img src={image2} />
-              <img src={image1} />
+              {/* SEO: Added alt tags */}
+              <img src={image4} alt="Bar View 4" />
+              <img src={image3} alt="Bar View 3" />
+              <img src={image2} alt="Bar View 2" />
+              <img src={image1} alt="Bar View 1" />
             </div>
             {/* スクロール */}
             <div className=" w-full absolute bottom-10 flex justify-end">
@@ -183,19 +176,21 @@ function App() {
               <div>scroll</div>
             </div>
           </div>
-          <div
+          
+          {/* SEO: Changed to h2 for section header */}
+          <h2
             ref={accessref}
-            style={{ fontSize: "2rem" }}
+            style={{ fontSize: "2rem", fontWeight: "normal" }}
             className="w-full flex justify-center mt-20"
             onClick={() => {
-              window.scrollTo({
+               scrollRef.current?.scrollTo({
                 top: 0,
                 behavior: "smooth",
               });
             }}
           >
             About
-          </div>
+          </h2>
           {/* コンセプト */}
           <motion.div
             ref={aboutRef}
@@ -218,7 +213,7 @@ function App() {
                   transition: { duration: 0.6 },
                 }}
                 viewport={{ once: true, margin: "-100px" }}
-                className="whitespace-nowrap"
+                className="whitespace-nowrap font-normal"
               >
                 女性だけの空間を、
                 <br />
@@ -281,12 +276,12 @@ function App() {
             <motion.div
               initial={{ rotate: -90, x: 0 }}
               animate={{
-                x: [100, 0, 0, 100], // 移動先で静止する
+                x: [100, 0, 0, 100],
                 transition: {
                   x: {
-                    duration: 5, // 全体のアニメーションの時間
-                    times: [0, 0.1, 0.5, 1], // 停止する時間を設定
-                    ease: "easeInOut", // スムーズな動き
+                    duration: 5,
+                    times: [0, 0.1, 0.5, 1],
+                    ease: "easeInOut",
                     repeat: Infinity,
                     repeatType: "reverse",
                   },
@@ -300,13 +295,13 @@ function App() {
             <motion.div
               initial={{ rotate: 90, x: 0 }}
               animate={{
-                x: [-100, 0, 0, -100], // 移動先で静止する
+                x: [-100, 0, 0, -100],
                 transition: {
                   x: {
                     delay: 2,
-                    duration: 5, // 全体のアニメーションの時間
-                    times: [0, 0.1, 0.5, 1], // 停止する時間を設定
-                    ease: "easeInOut", // スムーズな動き
+                    duration: 5,
+                    times: [0, 0.1, 0.5, 1],
+                    ease: "easeInOut",
                     repeat: Infinity,
                     repeatType: "reverse",
                   },
@@ -320,13 +315,13 @@ function App() {
             <motion.div
               initial={{ rotate: -90, x: 0 }}
               animate={{
-                x: [100, 0, 0, 100], // 移動先で静止する
+                x: [100, 0, 0, 100],
                 transition: {
                   x: {
                     delay: 5,
-                    duration: 5, // 全体のアニメーションの時間
-                    times: [0, 0.1, 0.5, 1], // 停止する時間を設定
-                    ease: "easeInOut", // スムーズな動き
+                    duration: 5,
+                    times: [0, 0.1, 0.5, 1],
+                    ease: "easeInOut",
                     repeat: Infinity,
                     repeatType: "reverse",
                   },
@@ -341,12 +336,13 @@ function App() {
           <div ref={menuRef} className="w-[90%] relative  flex flex-col">
             <div>
               {/* コンテンツタイトル */}
-              <div
-                style={{ fontSize: "2rem" }}
+              {/* SEO: Changed to h2 */}
+              <h2
+                style={{ fontSize: "2rem", fontWeight: "normal" }}
                 className="w-full flex justify-center my-5 mt-20"
               >
                 Menu
-              </div>
+              </h2>
 
               {/* Food１（今週のHassun） */}
               {menuArray.map(({ title, desc, price, img, comment }, i) => {
@@ -367,13 +363,14 @@ function App() {
           {/* drink */}
           <Section className="w-[100%] relative flex flex-col right-5">
             {/* コンテンツタイトル */}
-            <div
-              style={{ fontSize: "2rem" }}
+            {/* SEO: Changed to h2 */}
+            <h2
+              style={{ fontSize: "2rem", fontWeight: "normal" }}
               className="w-full flex justify-center my-5 mt-0 mb-10"
               ref={contactref}
             >
               Drink
-            </div>
+            </h2>
 
             <div
               className="-my-5 px-10"
@@ -396,7 +393,8 @@ function App() {
               <div className="w-[130%] absolute -top-10">
                 <DrinkImageUpperFrame />
               </div>
-              <img className="-z-20 w-[100%] " src={drinkmain} />
+              {/* SEO: Added alt tag */}
+              <img className="-z-20 w-[100%] " src={drinkmain} alt="Seasonal Drinks" />
               <div className="w-[150%] absolute -bottom-24">
                 <DrinkImageBottomFrame />
               </div>
@@ -493,13 +491,14 @@ function App() {
           </Section>
           {/* access */}
           <Section className="w-[90%] relative  flex flex-col">
-            <div
+            {/* SEO: Changed to h2 */}
+            <h2
               ref={accessref}
-              style={{ fontSize: "2rem" }}
+              style={{ fontSize: "2rem", fontWeight: "normal" }}
               className="w-full flex justify-center my-5 mt-0"
             >
               Access
-            </div>
+            </h2>
             <motion.div
               whileTap={{ scale: 0.9 }}
               className=" overflow-hidden rounded-lg "
@@ -517,7 +516,7 @@ function App() {
             <div>定休日：月曜日・火曜日・水曜日</div>
             <div>電話：082-909-9760</div>
             <div>
-              予約方法：電話、インスタグラム、または下記のフォームから前日までにご予約お願いいたします。
+              予約方法：電話、インスタグラム、または下記のフォームからお願いいたします。
             </div>
             <div>※喫煙スペースあり（加熱式タバコのみ）</div>
             <div className="w-[100%] h-[100%]">
@@ -532,7 +531,8 @@ function App() {
               className="w-full flex justify-center  items-center my-5 mt-0"
               ref={contactref}
             >
-              <div style={{ fontSize: "2rem" }}>Contact</div>
+              {/* SEO: Changed to h2 */}
+              <h2 style={{ fontSize: "2rem", fontWeight: "normal" }}>Contact</h2>
 
               <div className="flex flex-col items-center -mt-14">
                 <div className="scrollallow flex flex-col items-center ml-6">
@@ -545,6 +545,7 @@ function App() {
                   whileTap={{ scale: 0.8 }}
                   whileHover={{ scale: 1.2 }}
                   className="w-[40px] h-[40px] rounded-full ml-6 mt-4"
+                  aria-label="Instagram"
                   onClick={() => {
                     if (!aref.current) return;
                     aref.current.click();
@@ -622,16 +623,18 @@ function App() {
             </form>
           </Section>
           {/* ad */}
-          <div
+          {/* SEO: Changed to footer */}
+          <footer
             style={{ fontSize: "0.8rem" }}
             className="w-[90%] h-[40px] relative  flex justify-center items-center my-2 mb-10"
           >
             ©︎Hassun
-          </div>
+          </footer>
         </div>
 
         {/* app header */}
-        <div
+        {/* SEO: Changed sidebar to aside for semantic meaning */}
+        <aside
           style={
             isMobile
               ? { display: "none" }
@@ -646,10 +649,8 @@ function App() {
               fontSize: "2rem",
             }}
             onClick={() => {
-              scrollRef.current?.scrollTo({ 
-              top: 0, 
-              behavior: "smooth" 
-            });
+              // BUG FIX: Use scrollRef instead of window to scroll the container
+              scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
             }}
           >
             Hassun
@@ -661,16 +662,26 @@ function App() {
                 whileTap={{ scale: 0.8 }}
                 whileHover={{ scale: 1.2 }}
                 className="mb-2"
-                onClick={(e) => {
-                 e.stopPropagation();
+                onClick={() => {
+                  // BUG FIX: Calculate position relative to the scroll container, not the window
                   if (!value.current || !scrollRef.current) return;
+
                   const element = value.current;
                   const container = scrollRef.current;
-                  const headerOffset = 20; // Adjusted offset (80 might be too much if the header is on the side)
+                  const headerOffset = 20; // offset adjustment
+
+                  // Get relative positions
                   const elementRect = element.getBoundingClientRect();
                   const containerRect = container.getBoundingClientRect();
+                  
+                  // Get current container scroll
                   const currentContainerScroll = container.scrollTop;
-                  const offsetPosition = currentContainerScroll + (elementRect.top - containerRect.top) - headerOffset;
+
+                  // Calculate target position
+                  const offsetPosition =
+                    currentContainerScroll + (elementRect.top - containerRect.top) - headerOffset;
+
+                  // Scroll the container
                   container.scrollTo({
                     top: offsetPosition,
                     behavior: "smooth",
@@ -687,6 +698,7 @@ function App() {
               whileTap={{ scale: 0.8 }}
               whileHover={{ scale: 1.2 }}
               className="w-[30px] h-[30px] rounded-full"
+              aria-label="Instagram"
               onClick={() => {
                 if (!aref.current) return;
                 aref.current.click();
@@ -699,10 +711,11 @@ function App() {
               style={{ display: "none" }}
               ref={aref}
               target="_blank"
+              rel="noopener noreferrer" // Security best practice
             />
           </div>
-        </div>
-      </div>
+        </aside>
+      </main>
     </>
   );
 }
