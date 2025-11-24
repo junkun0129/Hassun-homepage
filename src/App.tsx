@@ -646,7 +646,10 @@ function App() {
               fontSize: "2rem",
             }}
             onClick={() => {
-              window.scrollTo({ top: 0, behavior: "smooth" });
+              scrollRef.current?.scrollTo({ 
+              top: 0, 
+              behavior: "smooth" 
+            });
             }}
           >
             Hassun
@@ -658,18 +661,17 @@ function App() {
                 whileTap={{ scale: 0.8 }}
                 whileHover={{ scale: 1.2 }}
                 className="mb-2"
-                onClick={() => {
-                  if (!value.current) return;
-
-                  // Get element position
+                onClick={(e) => {
+                 e.stopPropagation();
+                  if (!value.current || !scrollRef.current) return;
                   const element = value.current;
-                  const headerOffset = 80; // ヘッダーの高さ分のオフセット
-                  const elementPosition = element.getBoundingClientRect().top;
-                  const offsetPosition =
-                    elementPosition + window.pageYOffset - headerOffset;
-
-                  // Scroll to element
-                  window.scrollTo({
+                  const container = scrollRef.current;
+                  const headerOffset = 20; // Adjusted offset (80 might be too much if the header is on the side)
+                  const elementRect = element.getBoundingClientRect();
+                  const containerRect = container.getBoundingClientRect();
+                  const currentContainerScroll = container.scrollTop;
+                  const offsetPosition = currentContainerScroll + (elementRect.top - containerRect.top) - headerOffset;
+                  container.scrollTo({
                     top: offsetPosition,
                     behavior: "smooth",
                   });
