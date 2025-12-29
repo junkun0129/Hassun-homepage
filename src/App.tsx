@@ -101,7 +101,7 @@ function App() {
           className="z-40 fixed w-full h-full"
         ></div>
       )}
-      
+
       {/* SEO: Changed main wrapper div to <main> and attached scrollRef correctly */}
       <main
         ref={scrollRef}
@@ -157,7 +157,13 @@ function App() {
             {/* キャッチコピー */}
             <div className="w-[60%] flex flex-col items-start my-6 ml-auto">
               {/* SEO: Changed to h1 for main title importance */}
-              <h1 style={{ fontSize: "2rem", fontFamily: "grandstar", fontWeight: "normal" }}>
+              <h1
+                style={{
+                  fontSize: "2rem",
+                  fontFamily: "grandstar",
+                  fontWeight: "normal",
+                }}
+              >
                 Women Only <br />
                 Dining Bar
               </h1>
@@ -176,14 +182,14 @@ function App() {
               <div>scroll</div>
             </div>
           </div>
-          
+
           {/* SEO: Changed to h2 for section header */}
           <h2
             ref={accessref}
             style={{ fontSize: "2rem", fontWeight: "normal" }}
             className="w-full flex justify-center mt-20"
             onClick={() => {
-               scrollRef.current?.scrollTo({
+              scrollRef.current?.scrollTo({
                 top: 0,
                 behavior: "smooth",
               });
@@ -379,7 +385,7 @@ function App() {
                 zIndex: 10,
               }}
             >
-              ドリンクは全て550円（税込）。
+              ドリンクは全て600円（税込）。
               <br />
               試行錯誤を重ねて作り上げた自慢の一杯ばかりです。
               <br />
@@ -394,7 +400,11 @@ function App() {
                 <DrinkImageUpperFrame />
               </div>
               {/* SEO: Added alt tag */}
-              <img className="-z-20 w-[100%] " src={drinkmain} alt="Seasonal Drinks" />
+              <img
+                className="-z-20 w-[100%] "
+                src={drinkmain}
+                alt="Seasonal Drinks"
+              />
               <div className="w-[150%] absolute -bottom-24">
                 <DrinkImageBottomFrame />
               </div>
@@ -532,7 +542,9 @@ function App() {
               ref={contactref}
             >
               {/* SEO: Changed to h2 */}
-              <h2 style={{ fontSize: "2rem", fontWeight: "normal" }}>Contact</h2>
+              <h2 style={{ fontSize: "2rem", fontWeight: "normal" }}>
+                Contact
+              </h2>
 
               <div className="flex flex-col items-center -mt-14">
                 <div className="scrollallow flex flex-col items-center ml-6">
@@ -673,13 +685,15 @@ function App() {
                   // Get relative positions
                   const elementRect = element.getBoundingClientRect();
                   const containerRect = container.getBoundingClientRect();
-                  
+
                   // Get current container scroll
                   const currentContainerScroll = container.scrollTop;
 
                   // Calculate target position
                   const offsetPosition =
-                    currentContainerScroll + (elementRect.top - containerRect.top) - headerOffset;
+                    currentContainerScroll +
+                    (elementRect.top - containerRect.top) -
+                    headerOffset;
 
                   // Scroll the container
                   container.scrollTo({

@@ -11,9 +11,9 @@ export type MenuContents = {
 export const menuArray: MenuContents[] = [
   {
     img: hassun,
-    price: "（税込み２２００円）",
+    price: "（税込み２５００円）",
     title: "今週のHassun",
-    desc: "旬の野菜と魚を中心に８種類の酒のあてを週替わりでご用意しております。　※今週のHassunは予約必須（当日の昼まで）",
+    desc: "旬の野菜と魚を中心に８種類の酒のあてを週替わりでご用意しております。　※今週のHassunは予約必須（前日まで）",
     comment: "",
   },
   {
@@ -26,7 +26,7 @@ export const menuArray: MenuContents[] = [
   },
   {
     img: otsumami,
-    price: "（税込み５５０円）",
+    price: "（税込み６００円）",
     title: "おつまみセット",
     desc: "特性のディップを載せたクラッカーと、チョコ、ミックスナッツ、燻製チーズを一皿に。",
     comment:
