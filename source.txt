@@ -1,0 +1,1190 @@
+===== src/api/mail.api.ts =====
+export const sendEmailApi = async ({
+  mailtext,
+  from,
+}: {
+  mailtext: string;
+  from: string;
+}) => {
+  console.log(mailtext);
+  console.log(from);
+  const res = await fetch(import.meta.env.VITE_API_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ mailtext, from }),
+  });
+  console.log(res);
+
+  if (!res.ok) {
+    throw new Error(
+      `Failed to send email: ${res.status} ${
+        res.statusText
+      }. Payload: ${JSON.stringify({ mailtext, from })}`
+    );
+  }
+
+  const text = await res.text();
+  console.log(text);
+  // Attempt to parse JSON
+  return text;
+};
+
+===== src/App.tsx =====
+import { useRef, useState } from "react";
+import image1 from "./assets/view1.jpg";
+import image2 from "./assets/doorstylish.jpg";
+import image3 from "./assets/entrancestylish.jpg";
+import image4 from "./assets/view4.jpg";
+
+import HassunBall from "./components/svg/HassunBall";
+import { motion } from "framer-motion";
+import InstagramIcon from "./components/svg/InstagramIcon";
+
+import About1Icon from "./components/svg/About1Icon";
+import About2Icon from "./components/svg/About2Icon";
+
+import DrinkImageUpperFrame from "./components/svg/DrinkImageUpperFrame";
+import DrinkImageBottomFrame from "./components/svg/DrinkImageBottomFrame";
+import drinkmain from "./assets/drink-main.png";
+
+import { sendEmailApi } from "./api/mail.api";
+import { color } from "./constants/common";
+import { useMediaQuery } from "react-responsive";
+import { menuArray } from "./data/menu";
+// import HamburgerMenu from "./components/utils/HamburgerMenu";
+import Section from "./components/utils/Section";
+import MenuContent from "./components/utils/MenuContent";
+import MyMap from "./components/utils/MyMap";
+
+import FlexDrinkMenuHolder from "./components/svg/FlexDrinkMenuHolder";
+import AccessPath from "./components/svg/AccessPath";
+import ConceptDrinkLogo from "./components/svg/ConceptDrinkLogo";
+
+function App() {
+  const aboutRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const accessref = useRef<HTMLDivElement>(null);
+  const contactref = useRef<HTMLDivElement>(null);
+
+  const resObject = {
+    about: aboutRef,
+    menu: menuRef,
+    access: accessref,
+    contact: contactref,
+  };
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Contact
+  const emailRef = useRef<HTMLInputElement>(null);
+  const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const [isEmailHassun, setisEmailHassun] = useState(false);
+  const [isTexthassun, setisTexthassun] = useState(false);
+
+  const [isAlc, setisAlc] = useState(true);
+  const [emailButtonText, setemailButtonText] = useState("送信");
+  const [isMobileMenuOpen] = useState(false);
+  const isMobile = useMediaQuery({ maxWidth: 640 });
+  const aref = useRef<HTMLAnchorElement>(null);
+
+  const wait = (num: number): Promise<void> =>
+    new Promise((resolve, _) => {
+      setTimeout(() => {
+        resolve();
+      }, num);
+    });
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setemailButtonText("・・・・送信中・・・・");
+    const data = new FormData(event.target as any);
+    const email = data.get("email");
+    const text = data.get("text");
+
+    if (!email || !text) return;
+    try {
+      await sendEmailApi({
+        mailtext: text as string,
+        from: email as string,
+      });
+      setemailButtonText("メールが送信されました");
+      await wait(3000);
+      setemailButtonText("送信");
+      setisTexthassun(false);
+      setisEmailHassun(false);
+      if (textAreaRef.current) {
+        textAreaRef.current.value = "";
+      }
+      if (emailRef.current) {
+        emailRef.current.value = "";
+      }
+    } catch (error) {
+      console.log(error);
+      setemailButtonText("メールの送信に失敗しました");
+      await wait(1000);
+      setemailButtonText("送信");
+    }
+  };
+  return (
+    <>
+      {isMobileMenuOpen && (
+        <div
+          style={{ backgroundColor: "rgba(0, 0, 0, 0.5)" }}
+          className="z-40 fixed w-full h-full"
+        ></div>
+      )}
+      
+      {/* SEO: Changed main wrapper div to <main> and attached scrollRef correctly */}
+      <main
+        ref={scrollRef}
+        style={
+          isMobile
+            ? {
+                width: "100vw",
+                height: "100vh",
+                marginLeft: "15px",
+              }
+            : {
+                width: "100vw",
+                height: "100vh",
+              }
+        }
+        className="flex relative overflow-x-hidden overflow-y-scroll"
+      >
+        {/* Main image on the left */}
+        <div
+          style={isMobile ? { display: "none" } : { display: "flex" }}
+          className="h-full w-[50%] main-images fixed z-20 overflow-hidden "
+        >
+          {/* SEO: Added alt tags */}
+          <img src={image1} alt="Bar Interior View" />
+          <img src={image2} alt="Stylish Door" />
+          <img src={image3} alt="Entrance" />
+          <img src={image4} alt="Bar Atmosphere" />
+        </div>
+
+        {/* main content */}
+        <div
+          className="main-content relative z-10"
+          style={
+            isMobile
+              ? { width: "100%" }
+              : {
+                  transform: "translateX(calc(51vw))",
+                  width: "35.1%",
+                }
+          }
+        >
+          {/* Hassunボール */}
+          <div
+            style={
+              isMobile ? { left: "2px", top: "10px" } : { display: "flex" }
+            }
+            className=" absolute w-[80px] h-[80px] top-2"
+          >
+            <HassunBall />
+          </div>
+          {/* ランディングページ */}
+          <div className="w-[90%] h-[100vh] relative ">
+            {/* キャッチコピー */}
+            <div className="w-[60%] flex flex-col items-start my-6 ml-auto">
+              {/* SEO: Changed to h1 for main title importance */}
+              <h1 style={{ fontSize: "1.5rem", fontFamily: "kaisei", fontWeight: "normal" }}>
+                女性だけの特別な空間 <br />
+                Hassun
+              </h1>
+            </div>
+            {/* 切り替わる画像 */}
+            <div className="h-[370px] w-[100%] main-images absolute rounded-lg overflow-hidden shadow-lg">
+              {/* SEO: Added alt tags */}
+              <img src={image4} alt="Bar View 4" />
+              <img src={image3} alt="Bar View 3" />
+              <img src={image2} alt="Bar View 2" />
+              <img src={image1} alt="Bar View 1" />
+            </div>
+            {/* スクロール */}
+            <div className=" w-full absolute bottom-10 flex justify-end">
+              <div className=" mt-[1px] scrollallow">⇩</div>
+              <div>scroll</div>
+            </div>
+          </div>
+          
+          {/* SEO: Changed to h2 for section header */}
+          <h2
+            ref={accessref}
+            style={{ fontSize: "2rem", fontWeight: "normal" }}
+            className="w-full flex justify-center mt-20"
+            onClick={() => {
+               scrollRef.current?.scrollTo({
+                top: 0,
+                behavior: "smooth",
+              });
+            }}
+          >
+            About
+          </h2>
+          {/* コンセプト */}
+          <motion.div
+            ref={aboutRef}
+            className="w-[100%] relative right-5  flex flex-col  overflow-hidden"
+          >
+            <Section className="w-[120px] h-[120px] absolute top-5 right-2">
+              <ConceptDrinkLogo />
+            </Section>
+
+            {/* タイトル */}
+            <Section
+              style={{ fontSize: "clamp(1.2rem, 4vw, 1.5rem)" }}
+              className="my-10 ml-5 md:ml-8 relative z-50 min-h-[100px]"
+            >
+              <motion.h2
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.6 },
+                }}
+                viewport={{ once: true, margin: "-100px" }}
+                className="whitespace-nowrap font-normal"
+              >
+                女性だけの空間を、
+                <br />
+                あなたに。
+              </motion.h2>
+            </Section>
+
+            <div
+              style={{ fontSize: "1.1rem" }}
+              className="flex flex-col justify-between overflow-visible"
+            >
+              {/* 文言１ */}
+              <Section
+                style={{ backgroundColor: color.hassun_green }}
+                className=" ml-7 -mt-3 z-40 rounded-lg p-2 shadow-lg"
+              >
+                にぎやかな町の中で、
+                <br />
+                ほんの少し、足を休める場所。
+                <br />
+                今日はどんな週替わりの“あて”に出会えるだろう？
+                <br />
+              </Section>
+
+              {/* 文言２ */}
+              <Section
+                style={{
+                  textAlign: "right",
+                  backgroundColor: color.hassun_green,
+                }}
+                className="mx-3 ml-8 my-20 z-40 rounded-lg p-2 shadow-lg"
+              >
+                「Hassun」は、
+                <br />
+                女性が安心して立ち寄れる、
+                <br />
+                大皿にのった8種類の酒のあてとお酒の店。
+              </Section>
+
+              {/* 文言３ */}
+              <Section
+                style={{ backgroundColor: color.hassun_green }}
+                className="ml-8 z-40 rounded-lg p-2 shadow-lg mb-4 mx-5"
+              >
+                気軽に訪れて、
+                <br /> 心がふっと軽くなるような、
+                <br />
+                そんなひとときをご提供します。
+              </Section>
+            </div>
+
+            <div className="absolute top-32 -left-32 w-[100%] h-[50%]">
+              <About1Icon />
+            </div>
+
+            <div className="absolute -bottom-10 -right-20 w-[80%] h-[50%]">
+              <About2Icon />
+            </div>
+
+            <motion.div
+              initial={{ rotate: -90, x: 0 }}
+              animate={{
+                x: [100, 0, 0, 100],
+                transition: {
+                  x: {
+                    duration: 5,
+                    times: [0, 0.1, 0.5, 1],
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  },
+                },
+              }}
+              className="w-[100px] h-[100px] absolute -top-0 -right-10 z-50"
+            >
+              <HassunBall />
+            </motion.div>
+
+            <motion.div
+              initial={{ rotate: 90, x: 0 }}
+              animate={{
+                x: [-100, 0, 0, -100],
+                transition: {
+                  x: {
+                    delay: 2,
+                    duration: 5,
+                    times: [0, 0.1, 0.5, 1],
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  },
+                },
+              }}
+              className="w-[100px] h-[100px] absolute -left-10 top-[50%] z-50"
+            >
+              <HassunBall />
+            </motion.div>
+
+            <motion.div
+              initial={{ rotate: -90, x: 0 }}
+              animate={{
+                x: [100, 0, 0, 100],
+                transition: {
+                  x: {
+                    delay: 5,
+                    duration: 5,
+                    times: [0, 0.1, 0.5, 1],
+                    ease: "easeInOut",
+                    repeat: Infinity,
+                    repeatType: "reverse",
+                  },
+                },
+              }}
+              className="w-[100px] h-[100px] absolute -right-10 top-[80%] z-50"
+            >
+              <HassunBall />
+            </motion.div>
+          </motion.div>
+          {/* メニュー */}
+          <div ref={menuRef} className="w-[90%] relative  flex flex-col">
+            <div>
+              {/* コンテンツタイトル */}
+              {/* SEO: Changed to h2 */}
+              <h2
+                style={{ fontSize: "2rem", fontWeight: "normal" }}
+                className="w-full flex justify-center my-5 mt-20"
+              >
+                Menu
+              </h2>
+
+              {/* Food１（今週のHassun） */}
+              {menuArray.map(({ title, desc, price, img, comment }, i) => {
+                return (
+                  <MenuContent
+                    key={i + title}
+                    title={title}
+                    desc={desc}
+                    price={price}
+                    img={img}
+                    isMobile={isMobile}
+                    comment={comment}
+                  />
+                );
+              })}
+            </div>
+          </div>
+          {/* drink */}
+          <Section className="w-[100%] relative flex flex-col right-5">
+            {/* コンテンツタイトル */}
+            {/* SEO: Changed to h2 */}
+            <h2
+              style={{ fontSize: "2rem", fontWeight: "normal" }}
+              className="w-full flex justify-center my-5 mt-0 mb-10"
+              ref={contactref}
+            >
+              Drink
+            </h2>
+
+            <div
+              className="-my-5 px-10"
+              style={{
+                color: color.hassun_orange,
+                zIndex: 10,
+              }}
+            >
+              ドリンクは全て550円（税込）。
+              <br />
+              試行錯誤を重ねて作り上げた自慢の一杯ばかりです。
+              <br />
+              アルコールからノンアルコールまで
+              <br />
+              どなたでも楽しめるラインナップをご用意しております。
+            </div>
+
+            {/* drink-main-image */}
+            <div className="flex flex-col justify-between items-center relative">
+              <div className="w-[130%] absolute -top-10">
+                <DrinkImageUpperFrame />
+              </div>
+              {/* SEO: Added alt tag */}
+              <img className="-z-20 w-[100%] " src={drinkmain} alt="Seasonal Drinks" />
+              <div className="w-[150%] absolute -bottom-24">
+                <DrinkImageBottomFrame />
+              </div>
+            </div>
+
+            <div className=" h-[100px] z-0"></div>
+
+            {!!isAlc && (
+              <motion.div
+                initial={{ y: 50, opacity: 0, rotate: -10 }}
+                animate={{
+                  y: 0,
+                  opacity: 1,
+                  transition: { y: { delay: 1.2 }, opacity: { delay: 1.2 } },
+                }}
+                className="absolute w-[100px] h-[100px] top-[67%] right-[30%]"
+              >
+                <HassunBall />
+              </motion.div>
+            )}
+            {!!isAlc && (
+              <div className="absolute top-[60%] w-full left-7 z-50">
+                <Section>
+                  発酵レモンスカッシュ
+                  <br />
+                  ノンアルモヒート <br />
+                  ノンアルソルベサワー
+                  <br /> ピンクレモネード <br />
+                  ノンアルサンライズ
+                </Section>
+              </div>
+            )}
+
+            <div
+              style={{ color: color.hassun_green }}
+              className="absolute w-full top-[63%] left-[10%] z-50"
+            >
+              {!isAlc && (
+                <Section className="w-full z-50">
+                  レモンサワー
+                  <br />
+                  発酵レモンサワー <br />
+                  ゆずサワー
+                  <br /> ジンリッキー <br />
+                  ハイボール
+                </Section>
+              )}
+            </div>
+            <div
+              style={{ color: color.hassun_green }}
+              className="absolute w-full top-[65%] left-[50%] z-50"
+            >
+              {!isAlc && (
+                <Section className="w-full ">
+                  ビール
+                  <br />
+                  モヒート <br />
+                  梅酒
+                  <br /> ソルベサワー <br />
+                  アップルハイボール
+                </Section>
+              )}
+            </div>
+
+            <div
+              style={{
+                color: isAlc ? color.hassun_orange : color.hassun_green,
+              }}
+              className="flex flex-col w-full items-end z-50 pr-5"
+            >
+              <div
+                style={{ fontSize: "0.7rem" }}
+                className="flex flex-col items-center scrollallow"
+              >
+                <div>クリック</div>
+                <div>⇩</div>
+              </div>
+              <button
+                onClick={() => {
+                  setisAlc((pre) => !pre);
+                }}
+                style={{ fontSize: "1.2rem" }}
+              >
+                {isAlc ? "non-alcohol" : "alcohol"}
+              </button>
+            </div>
+
+            {/* botom green space */}
+            <div className="flex flex-col justify-between items-center relative z-10">
+              <div className="w-[130%] relative">
+                <FlexDrinkMenuHolder isAlc={isAlc} />
+              </div>
+            </div>
+          </Section>
+          {/* access */}
+          <Section className="w-[90%] relative  flex flex-col">
+            {/* SEO: Changed to h2 */}
+            <h2
+              ref={accessref}
+              style={{ fontSize: "2rem", fontWeight: "normal" }}
+              className="w-full flex justify-center my-5 mt-0"
+            >
+              Access
+            </h2>
+            <motion.div
+              whileTap={{ scale: 0.9 }}
+              className=" overflow-hidden rounded-lg "
+            >
+              <MyMap />
+            </motion.div>
+            <div className="my-2" style={{ fontSize: "1.2rem" }}>
+              Hassun
+            </div>
+            <div>
+              〒739-1733 <br />
+              広島県広島市安佐北区口田南8丁目3-1　303
+            </div>
+            <div className="mt-2">営業時間：17:00~23:00</div>
+            <div>定休日：月曜日・火曜日・水曜日</div>
+            <div>電話：082-909-9760</div>
+            <div>
+              予約方法：電話、インスタグラム、または下記のフォームから前日までにお願いいたします。
+            </div>
+            <div>※喫煙スペースあり（加熱式タバコのみ）</div>
+            <div className="w-[100%] h-[100%]">
+              <AccessPath />
+            </div>
+          </Section>
+
+          {/* contact */}
+          <Section className="w-[90%] relative  flex flex-col">
+            {/* コンテンツタイトル */}
+            <div
+              className="w-full flex justify-center  items-center my-5 mt-0"
+              ref={contactref}
+            >
+              {/* SEO: Changed to h2 */}
+              <h2 style={{ fontSize: "2rem", fontWeight: "normal" }}>Contact</h2>
+
+              <div className="flex flex-col items-center -mt-14">
+                <div className="scrollallow flex flex-col items-center ml-6">
+                  <span className="-mb-4" style={{ fontSize: "0.7rem" }}>
+                    インスタグラム
+                  </span>
+                  <br />⇩
+                </div>
+                <motion.button
+                  whileTap={{ scale: 0.8 }}
+                  whileHover={{ scale: 1.2 }}
+                  className="w-[40px] h-[40px] rounded-full ml-6 mt-4"
+                  aria-label="Instagram"
+                  onClick={() => {
+                    if (!aref.current) return;
+                    aref.current.click();
+                  }}
+                >
+                  <InstagramIcon color={color.hassun_orange} />
+                </motion.button>
+              </div>
+            </div>
+
+            <form
+              className="w-full flex flex-col justify-between items-center"
+              onSubmit={handleSubmit}
+            >
+              <div
+                style={{ backgroundColor: color.hassun_green }}
+                className="w-full relative flex flex-col justify-between"
+              >
+                <input
+                  className="w-full rounded-md p-2"
+                  required
+                  ref={emailRef}
+                  onBlur={() => {
+                    if (!emailRef.current) return;
+                    if (emailRef.current.value) {
+                      setisEmailHassun(true);
+                    }
+                  }}
+                  name="email"
+                  placeholder="email@example.com"
+                />
+
+                <textarea
+                  required
+                  ref={textAreaRef}
+                  className="mt-5 w-full rounded-md p-2"
+                  name="text"
+                  onBlur={() => {
+                    if (!textAreaRef.current) return;
+                    if (textAreaRef.current.value) {
+                      setisTexthassun(true);
+                    }
+                  }}
+                  placeholder="こちらにお問い合わせ内容を記載し、”送信”ボタンを押してください。"
+                />
+                <motion.div
+                  initial={{ y: 50, opacity: 0 }}
+                  animate={isEmailHassun ? { y: 0, opacity: 1 } : {}}
+                  className="absolute -top-14 left-5 -z-10 w-[100px] h-[100px]"
+                >
+                  <HassunBall />
+                </motion.div>
+
+                <motion.div
+                  initial={{ y: -50, opacity: 0, rotate: 180 }}
+                  animate={isTexthassun ? { y: 0, opacity: 1 } : {}}
+                  className="absolute -bottom-14 right-5 -z-10 w-[100px] h-[100px]"
+                >
+                  <HassunBall />
+                </motion.div>
+              </div>
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                style={{ border: `${color.hassun_orange} solid 1px` }}
+                whileHover={{
+                  boxShadow:
+                    "0px 2px 2px 0px rgba(0, 0, 0, 0.5), inset 0px -3px 6px -2px",
+                }}
+                className="w-full py-3 rounded-md mt-10"
+                type="submit"
+                disabled={emailButtonText !== "送信"}
+              >
+                {emailButtonText}
+              </motion.button>
+            </form>
+          </Section>
+          {/* ad */}
+          {/* SEO: Changed to footer */}
+          <footer
+            style={{ fontSize: "0.8rem" }}
+            className="w-[90%] h-[40px] relative  flex justify-center items-center my-2 mb-10"
+          >
+            ©︎Hassun
+          </footer>
+        </div>
+
+        {/* app header */}
+        {/* SEO: Changed sidebar to aside for semantic meaning */}
+        <aside
+          style={
+            isMobile
+              ? { display: "none" }
+              : { display: "flex", color: color.hassun_green }
+          }
+          className="h-full w-[15%] header fixed right-[16px] flex flex-col justify-around items-center"
+        >
+          <button
+            style={{
+              writingMode: "vertical-rl",
+              textOrientation: "upright",
+              fontSize: "2rem",
+            }}
+            onClick={() => {
+              // BUG FIX: Use scrollRef instead of window to scroll the container
+              scrollRef.current?.scrollTo({ top: 0, behavior: "smooth" });
+            }}
+          >
+            Hassun
+          </button>
+          <nav className="flex flex-col">
+            {Object.entries(resObject).map(([key, value]) => (
+              <motion.button
+                key={key}
+                whileTap={{ scale: 0.8 }}
+                whileHover={{ scale: 1.2 }}
+                className="mb-2"
+                onClick={() => {
+                  // BUG FIX: Calculate position relative to the scroll container, not the window
+                  if (!value.current || !scrollRef.current) return;
+
+                  const element = value.current;
+                  const container = scrollRef.current;
+                  const headerOffset = 20; // offset adjustment
+
+                  // Get relative positions
+                  const elementRect = element.getBoundingClientRect();
+                  const containerRect = container.getBoundingClientRect();
+                  
+                  // Get current container scroll
+                  const currentContainerScroll = container.scrollTop;
+
+                  // Calculate target position
+                  const offsetPosition =
+                    currentContainerScroll + (elementRect.top - containerRect.top) - headerOffset;
+
+                  // Scroll the container
+                  container.scrollTo({
+                    top: offsetPosition,
+                    behavior: "smooth",
+                  });
+                }}
+              >
+                {key}
+              </motion.button>
+            ))}
+          </nav>
+
+          <div className="flex">
+            <motion.button
+              whileTap={{ scale: 0.8 }}
+              whileHover={{ scale: 1.2 }}
+              className="w-[30px] h-[30px] rounded-full"
+              aria-label="Instagram"
+              onClick={() => {
+                if (!aref.current) return;
+                aref.current.click();
+              }}
+            >
+              <InstagramIcon color={color.hassun_green} />
+            </motion.button>
+            <a
+              href="https://www.instagram.com/hassun3fb?igsh=eDNmN201ZGZtMHd5"
+              style={{ display: "none" }}
+              ref={aref}
+              target="_blank"
+              rel="noopener noreferrer" // Security best practice
+            />
+          </div>
+        </aside>
+      </main>
+    </>
+  );
+}
+
+export default App;
+===== src/components/utils/HamburgerMenu.tsx =====
+import { motion } from "framer-motion";
+import React from "react";
+
+const HamburgerMenu = ({
+  isOpen,
+  setIsOpen,
+  setisMobileMenuOpen,
+  resObject,
+}: {
+  isOpen: boolean;
+  setIsOpen: (e: boolean) => void;
+  resObject: { [key: string]: React.RefObject<HTMLDivElement> };
+  setisMobileMenuOpen: (e: boolean) => void;
+}) => {
+  // メニューの開閉を切り替える関数
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div style={{ fontSize: "1.3rem" }} className="hamburger-menu">
+      <button
+        className={`hamburger-icon ${isOpen ? "open" : ""}`}
+        onClick={toggleMenu}
+      >
+        <span className="bar"></span>
+        <span className="bar"></span>
+        <span className="bar"></span>
+      </button>
+
+      <nav className={`menu ${isOpen ? "open" : ""}`}>
+        <ul>
+          {Object.entries(resObject).map(([key, value], i) => (
+            <li key={"hamburger-" + `${value}-` + i}>
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (!value.current) return;
+                  const y =
+                    value.current.getBoundingClientRect().top + window.scrollY; // 修正
+                  window.scrollTo({
+                    top: y,
+                    behavior: "smooth",
+                  });
+                  setisMobileMenuOpen(false);
+                }}
+              >
+                {key}
+              </motion.button>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
+  );
+};
+
+export default HamburgerMenu;
+
+===== src/components/utils/MenuContent.tsx =====
+import { MenuContents } from "../../data/menu";
+import Section from "./Section";
+type Props = MenuContents & {
+  isMobile: boolean;
+};
+const MenuContent = ({ title, img, price, desc, comment, isMobile }: Props) => {
+  return (
+    <Section className="mt-10 mb-24 mx-5">
+      {/* 写真 */}
+      <div
+        style={{ width: "100%", height: "252px" }}
+        className=" overflow-hidden rounded-lg"
+      >
+        <img
+          src={img}
+          style={{
+            objectFit: "cover",
+            width: "500px",
+            height: "300px",
+          }}
+        />
+      </div>
+      {/* 料理名＋値段 */}
+      <div
+        style={isMobile ? { flexDirection: "column" } : {}}
+        className="flex my-1"
+      >
+        {/* 料理名 */}
+        <div className="mt-1" style={{ fontSize: "1.3rem" }}>
+          {title}
+        </div>
+        {/* 値段 */}
+        <div className="mt-2">{price}</div>
+      </div>
+      {/* 説明 */}
+      <div>{desc}</div>
+      {/* コメント */}
+      <div className="mt-1" style={{ fontSize: "0.8rem" }}>
+        {comment}
+      </div>
+    </Section>
+  );
+};
+
+export default MenuContent;
+
+===== src/components/utils/MyMap.tsx =====
+import React from "react";
+import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
+import hassunMaker from "../../assets/hassun-map-marker.svg";
+const containerStyle = {
+  width: "100%",
+  height: "200px", // 縦幅を小さくしたい場合はここを調整
+};
+
+const center = {
+  lat: 34.46673255133638, // Example: Tokyo
+  lng: 132.50718194964753,
+};
+const mapOptions = {
+  disableDefaultUI: true, // デフォルトのUI（コントロール、ズームなど）を無効化
+  zoomControl: false, // ズームコントロールを無効化
+  scrollwheel: false, // スクロールでのズームを無効化
+  mapTypeControl: false, // 地図の種類変更を無効化
+  streetViewControl: false, // ストリートビューコントロールを無効化
+  fullscreenControl: false, // フルスクリーンコントロールを無効化
+};
+
+const customIcon = {
+  url: hassunMaker, // SVGアイコン
+};
+const MyMap: React.FC = () => {
+  return (
+    <LoadScript googleMapsApiKey={"AIzaSyCLMvo_s8JFciYhn2XIBjYADYPn6Vzk_Yw"}>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={17}
+        options={mapOptions} // オプションを渡してすべてのUIを無効化
+      >
+        <Marker position={center} icon={customIcon} />
+      </GoogleMap>
+    </LoadScript>
+  );
+};
+
+export default MyMap;
+
+===== src/components/utils/Section.tsx =====
+import { useInView } from "framer-motion";
+import { CSSProperties, ReactNode, useRef } from "react";
+
+const Section = ({
+  children,
+  className,
+  style,
+}: {
+  children: ReactNode;
+  className?: string;
+  style?: CSSProperties;
+}) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  return (
+    <section
+      style={{
+        transform: isInView ? "none" : "translateX(-200px)",
+        opacity: isInView ? 1 : 0,
+        // display:isInView?'block':'none',
+        transition: "all 0.9s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s",
+        ...style,
+      }}
+      className={className}
+      ref={ref}
+    >
+      {children}
+    </section>
+  );
+};
+
+export default Section;
+
+===== src/constants/common.ts =====
+export const appStyle = {
+  headerHeight: 100,
+};
+export const color = {
+  hassun_green: "#ffa82f",
+  hassun_orange: "#33806c",
+};
+
+===== src/constants/routes.ts =====
+
+===== src/data/menu.ts =====
+import hassun from "../assets/hassun.jpg";
+import cakeset from "../assets/cakeset.jpg";
+import otsumami from "../assets/otsumamiset.jpg";
+export type MenuContents = {
+  img: string;
+  price: string;
+  title: string;
+  desc: string;
+  comment: string;
+};
+export const menuArray: MenuContents[] = [
+  {
+    img: hassun,
+    price: "（税込み２２００円）",
+    title: "今週のHassun",
+    desc: "旬の野菜と魚を中心に８種類の酒のあてを週替わりでご用意しております。　※今週のHassunは予約必須（当日の昼まで）",
+    comment: "",
+  },
+  {
+    img: cakeset,
+    price: "（税込み５５０円）",
+    title: "ケーキセット",
+    desc: "シフォンケーキとコーヒーまたは紅茶のセットをご用意しております。（今週のHassunを注文した場合にのみ注文可）",
+    comment:
+      "※今週のHassunのご注文かつドリンク２杯以上の注文にて無料で提供させていただきます。",
+  },
+  {
+    img: otsumami,
+    price: "（税込み５５０円）",
+    title: "おつまみセット",
+    desc: "特性のディップを載せたクラッカーと、チョコ、ミックスナッツ、燻製チーズを一皿に。",
+    comment:
+      "※今週のHassunをご注文されない方はチャージ料としてこちらをご注文願います",
+  },
+];
+
+===== src/index.css =====
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "kaisei";
+  src: url("./assets/kaisei.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "grandstar";
+  src: url("./assets/grandstar.ttf") format("truetype");
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  --main-color: #33806c;
+  --sub-color: #ffa82f;
+  overflow-x: hidden;
+  background-color: var(--sub-color);
+}
+body {
+  /* overflow-y: scroll; */
+}
+* {
+  box-sizing: border-box; /* Ensures padding and borders don't cause overflow */
+}
+
+.header {
+  font-family: "grandstar";
+  background-color: var(--main-color);
+  z-index: 10;
+}
+
+.main-content {
+  color: var(--main-color);
+  font-family: "kaisei";
+}
+
+.main-images img {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  animation: fade 8s infinite; /* アニメーション周期はそのまま8秒 */
+}
+
+.container {
+  overflow-x: hidden; /* コンテナ内の横方向のオーバーフローを防ぐ */
+}
+.main-images img:nth-child(1) {
+  animation-delay: 0s;
+}
+.main-images img:nth-child(2) {
+  animation-delay: 2s; /* 1枚目の後に表示 */
+}
+.main-images img:nth-child(3) {
+  animation-delay: 4s; /* 2枚目の後に表示 */
+}
+.main-images img:nth-child(4) {
+  animation-delay: 6s; /* 3枚目の後に表示 */
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0; /* フェードアウト開始 */
+    transform: scale(1.1);
+  }
+  12.5%,
+  62.5% {
+    opacity: 1; /* 画像が完全に表示される時間を拡大 */
+  }
+  75%,
+  100% {
+    opacity: 0; /* フェードアウト終了 */
+  }
+}
+
+.scrollallow {
+  animation: down 1.5s infinite;
+}
+
+@keyframes down {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translateY(10px);
+  }
+  40% {
+    transform: translate(0);
+  }
+}
+.hamburger-menu {
+  position: relative;
+}
+
+.hamburger-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 25px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 2;
+}
+
+.hamburger-icon .bar {
+  width: 30px;
+  height: 4px;
+  background-color: var(--main-color);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.hamburger-icon.open .bar:nth-child(1) {
+  transform: rotate(45deg) translateY(8px);
+}
+
+.hamburger-icon.open .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-icon.open .bar:nth-child(3) {
+  transform: rotate(-45deg) translateY(-8px);
+}
+
+.menu {
+  display: none;
+  position: absolute;
+  top: 50px;
+  right: 0;
+  background-color: #ffffff;
+  width: 200px;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.menu.open {
+  display: block;
+}
+
+.menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.menu ul li {
+  margin: 10px 0;
+}
+
+.menu ul li a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.menu ul li a:hover {
+  color: #f0a500;
+}
+
+===== src/main.tsx =====
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import "./index.css";
+
+ReactDOM.createRoot(document.getElementById("root")!).render(<App />);
+
+===== src/utils.ts =====
+export const wait = (time: number): Promise<void> =>
+  new Promise((resolve) =>
+    setTimeout(() => {
+      resolve();
+    }, time)
+  );
+
+export function awaitScrollTo(scrollTo: number) {
+  return new Promise<void>((resolve) => {
+    const targetPosition = scrollTo; // スクロール目標
+    const checkScroll = () => {
+      if (Math.abs(window.scrollY - targetPosition) <= 1) {
+        window.removeEventListener("scroll", checkScroll);
+        resolve(); // 完了通知
+      }
+    };
+    window.addEventListener("scroll", checkScroll);
+    window.scrollTo({ top: targetPosition, behavior: "smooth" });
+  });
+}
+
+===== src/vite-env.d.ts =====
+/// <reference types="vite/client" />
+
